@@ -350,18 +350,11 @@
 <script>
   /* =====================================================================
      DAFTAR VIDEO
-     Cara menambah video baru: salin salah satu blok { ... } di bawah,
-     tempel PALING ATAS di dalam array VIDEOS (posisi paling awal),
-     lalu isi 4 bagian ini:
-       judul     -> judul video
-       deskripsi -> ringkasan singkat video (boleh dikosongkan "")
-       driveLink -> link Google Drive video (link share biasa juga bisa,
-                    ID-nya akan diambil otomatis)
-       tanggal   -> tanggal upload, format bebas misalnya "5 Agustus 2026"
-     Video paling atas di array = video paling baru = tampil paling awal
-     di bedengan (grid 4 video per baris).
+     Daftar video TIDAK lagi ditulis di sini. Halaman ini otomatis
+     mengambil (fetch) isi videos.json setiap kali dibuka, jadi cukup
+     edit videos.json untuk menambah video baru — file ini (index.html)
+     tidak perlu diupload ulang.
      ===================================================================== */
-  const VIDEOS = /*__VIDEOS_JSON__*/[];
 
   /* =====================================================================
      KODE IKLAN ADSTERRA
@@ -445,12 +438,12 @@
       .replace(/(^-|-$)/g, '');
   }
 
-  function renderFeed(){
+  function renderFeed(VIDEOS){
     const feed = document.getElementById('feed');
     feed.innerHTML = '';
 
-    if(!VIDEOS.length){
-      feed.innerHTML = '<div class="empty">Belum ada video. Tambahkan video pertama di dalam array VIDEOS pada kode halaman ini.</div>';
+    if(!VIDEOS || !VIDEOS.length){
+      feed.innerHTML = '<div class="empty">Belum ada video.</div>';
       return;
     }
 
@@ -467,7 +460,7 @@
     VIDEOS.forEach((v, i) => {
       const episodeNumber = VIDEOS.length - i;
       const isLatest = i === 0;
-      const driveId = extractDriveId(v.driveLink);
+      const driveId = v.driveId;
 
       const card = document.createElement('div');
       card.className = 'card' + (isLatest ? ' latest' : '');
@@ -497,7 +490,13 @@
     });
   }
 
-  renderFeed();
+  fetch('videos.json')
+    .then(r => r.json())
+    .then(data => renderFeed(data))
+    .catch(err => {
+      document.getElementById('feed').innerHTML = '<div class="empty">Gagal memuat daftar video. Coba muat ulang halaman.</div>';
+      console.error(err);
+    });
   renderBannerAd(document.getElementById('ad-top-728x90'), { key:'d193d159f6ead21ab2fd4d86b506bc2e', width:728, height:90 });
   renderBannerAd(document.getElementById('ad-top-320x50'), { key:'e27a459a9e6188b68843a4fa32f52041', width:320, height:50 });
 </script>

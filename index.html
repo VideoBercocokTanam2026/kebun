@@ -350,121 +350,11 @@
 <script>
   /* =====================================================================
      DAFTAR VIDEO
-     Cara menambah video baru: salin salah satu blok { ... } di bawah,
-     tempel PALING ATAS di dalam array VIDEOS (posisi paling awal),
-     lalu isi 4 bagian ini:
-       judul     -> judul video
-       deskripsi -> ringkasan singkat video (boleh dikosongkan "")
-       driveLink -> link Google Drive video (link share biasa juga bisa,
-                    ID-nya akan diambil otomatis)
-       tanggal   -> tanggal upload, format bebas misalnya "5 Agustus 2026"
-     Video paling atas di array = video paling baru = tampil paling awal
-     di bedengan (grid 4 video per baris).
+     Daftar video TIDAK lagi ditulis di sini. Halaman ini otomatis
+     mengambil (fetch) isi videos.json setiap kali dibuka, jadi cukup
+     edit videos.json untuk menambah video baru — file ini (index.html)
+     tidak perlu diupload ulang.
      ===================================================================== */
-  const VIDEOS = [
-    {
-      judul: "Bercocok Tanam Part 18",
-      deskripsi: "",
-      driveLink: "https://drive.google.com/file/d/1LGewfpsxHgiBX7ft9QC_T57TIvJQsJkk/view",
-      tanggal: "9 Agustus 2026"
-    },
-    {
-      judul: "Bercocok Tanam Part 17",
-      deskripsi: "",
-      driveLink: "https://drive.google.com/file/d/1Z1IYzb2KeB7Xy2oEcEH__aih-IBaSmAw/view",
-      tanggal: "9 Agustus 2026"
-    },
-    {
-      judul: "Bercocok Tanam Part 16",
-      deskripsi: "",
-      driveLink: "https://drive.google.com/file/d/1g1QMICc9XEkTvWaibvD3nCFwNU-q2w4n/view",
-      tanggal: "8 Agustus 2026"
-    },
-    {
-      judul: "Bercocok Tanam Part 15",
-      deskripsi: "",
-      driveLink: "https://drive.google.com/file/d/1_-oW_IztT26BhQyWpkmOC7YQcyy7GUUN/view",
-      tanggal: "8 Agustus 2026"
-    },
-    {
-      judul: "Bercocok Tanam Part 14",
-      deskripsi: "",
-      driveLink: "https://drive.google.com/file/d/1yIINeyKG_c1lG-c4ZaB2g2bEX9Wej5de/view",
-      tanggal: "8 Agustus 2026"
-    },
-    {
-      judul: "Bercocok Tanam Part 13",
-      deskripsi: "",
-      driveLink: "https://drive.google.com/file/d/1voAXGqMAXOxGgp8B-5wPh3-XOYVD-WDk/view",
-      tanggal: "8 Agustus 2026"
-    },
-    {
-      judul: "Bercocok Tanam Part 12",
-      deskripsi: "",
-      driveLink: "https://drive.google.com/file/d/1E83l6GGbqpsdyVYdeD6otUbwRH9Qz-7Y/view",
-      tanggal: "8 Agustus 2026"
-    },
-    {
-      judul: "Bercocok Tanam Part 11",
-      deskripsi: "",
-      driveLink: "https://drive.google.com/file/d/1-zvABErJZx9OHwikcEkMLv1ZJjNDfH8f/view",
-      tanggal: "8 Agustus 2026"
-    },
-    {
-      judul: "Bercocok Tanam Part 10",
-      deskripsi: "",
-      driveLink: "https://drive.google.com/file/d/1tp-8TDhxlsTWdVJqcx94T-MsaMeX1a2Q/view",
-      tanggal: "8 Agustus 2026"
-    },
-    {
-      judul: "Bercocok Tanam Part 9",
-      deskripsi: "",
-      driveLink: "https://drive.google.com/file/d/1dNbOT-XXVnz0DEglavr7sZ1ETO0xdnxG/view",
-      tanggal: "7 Agustus 2026"
-    },
-    {
-      judul: "Bercocok Tanam Part 8",
-      deskripsi: "",
-      driveLink: "https://drive.google.com/file/d/1bttcBT9ni-CCWQRaX4GAyCNhPf5M46x8/view",
-      tanggal: "7 Agustus 2026"
-    },
-    {
-      judul: "Bercocok Tanam Part 6",
-      deskripsi: "",
-      driveLink: "https://drive.google.com/file/d/1saCcUqTVAkb_H2Y6gMDEf7648rPc2jXs/view",
-      tanggal: "6 Agustus 2026"
-    },
-    {
-      judul: "Bercocok Tanam Part 5",
-      deskripsi: "",
-      driveLink: "https://drive.google.com/file/d/11CGYcRY8K1SdUSynasDWkeiKIRgK9YXl/view",
-      tanggal: "6 Agustus 2026"
-    },
-    {
-      judul: "Bercocok Tanam Part 4",
-      deskripsi: "",
-      driveLink: "https://drive.google.com/file/d/1QKBAxb4VjVPIqRkrHZCmRmh1u_qE5AJo/view",
-      tanggal: "5 Agustus 2026"
-    },
-    {
-      judul: "Bercocok Tanam Part 3",
-      deskripsi: "",
-      driveLink: "https://drive.google.com/file/d/1gwElMeoQO49sJQOPovNEOjmSuaTqh-7k/view",
-      tanggal: "5 Agustus 2026"
-    },
-    {
-      judul: "Bercocok Tanam Part 2",
-      deskripsi: "",
-      driveLink: "https://drive.google.com/file/d/1OYrrjwe6zGuAdLo3P0-uYwni2ltvXTZK/view",
-      tanggal: "5 Agustus 2026"
-    },
-    {
-      judul: "Bercocok Tanam Part 1",
-      deskripsi: "",
-      driveLink: "https://drive.google.com/file/d/1Nxoe1YXGN5u56hXMkPaaazERbNgd4GJG/view",
-      tanggal: "4 Agustus 2026"
-    }
-  ];
 
   /* =====================================================================
      KODE IKLAN ADSTERRA
@@ -548,12 +438,12 @@
       .replace(/(^-|-$)/g, '');
   }
 
-  function renderFeed(){
+  function renderFeed(VIDEOS){
     const feed = document.getElementById('feed');
     feed.innerHTML = '';
 
-    if(!VIDEOS.length){
-      feed.innerHTML = '<div class="empty">Belum ada video. Tambahkan video pertama di dalam array VIDEOS pada kode halaman ini.</div>';
+    if(!VIDEOS || !VIDEOS.length){
+      feed.innerHTML = '<div class="empty">Belum ada video.</div>';
       return;
     }
 
@@ -570,7 +460,7 @@
     VIDEOS.forEach((v, i) => {
       const episodeNumber = VIDEOS.length - i;
       const isLatest = i === 0;
-      const driveId = extractDriveId(v.driveLink);
+      const driveId = v.driveId;
 
       const card = document.createElement('div');
       card.className = 'card' + (isLatest ? ' latest' : '');
@@ -600,7 +490,13 @@
     });
   }
 
-  renderFeed();
+  fetch('videos.json')
+    .then(r => r.json())
+    .then(data => renderFeed(data))
+    .catch(err => {
+      document.getElementById('feed').innerHTML = '<div class="empty">Gagal memuat daftar video. Coba muat ulang halaman.</div>';
+      console.error(err);
+    });
   renderBannerAd(document.getElementById('ad-top-728x90'), { key:'d193d159f6ead21ab2fd4d86b506bc2e', width:728, height:90 });
   renderBannerAd(document.getElementById('ad-top-320x50'), { key:'e27a459a9e6188b68843a4fa32f52041', width:320, height:50 });
 </script>

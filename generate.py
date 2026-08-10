@@ -35,22 +35,6 @@ def load_videos():
         return json.load(f)
 
 
-def js_videos_array(videos):
-    """Ubah daftar video jadi teks array JavaScript untuk ditempel ke HTML."""
-    items = []
-    for v in videos:
-        drive_link = f"https://drive.google.com/file/d/{v['driveId']}/view"
-        items.append(
-            "    {\n"
-            f"      judul: {json.dumps(v['judul'], ensure_ascii=False)},\n"
-            f"      deskripsi: {json.dumps(v.get('deskripsi', ''), ensure_ascii=False)},\n"
-            f"      driveLink: {json.dumps(drive_link)},\n"
-            f"      tanggal: {json.dumps(v['tanggal'], ensure_ascii=False)}\n"
-            "    }"
-        )
-    return "const VIDEOS = [\n" + ",\n".join(items) + "\n  ];\n"
-
-
 def cover_image_url(slug, drive_id):
     """Pakai cover custom kalau filenya ada di covers/ (boleh .jpg/.jpeg/.png/.webp),
     kalau tidak ada fallback ke thumbnail otomatis Google Drive."""
@@ -61,13 +45,14 @@ def cover_image_url(slug, drive_id):
     return f"https://drive.google.com/thumbnail?id={drive_id}&sz=w1200"
 
 
-def build_index(videos):
+def build_index():
+    """index.html sekarang murni salinan template — halaman ini mengambil
+    daftar video sendiri lewat fetch('videos.json') saat dibuka, jadi
+    TIDAK PERNAH perlu digenerate ulang / diupload ulang lagi setelah
+    pertama kali dibuat."""
     template_path = os.path.join(ROOT, "templates", "index.template.html")
     with open(template_path, "r", encoding="utf-8") as f:
         html = f.read()
-
-    marker = re.compile(r"const VIDEOS = /\*__VIDEOS_JSON__\*/\[\];\n")
-    html = marker.sub(js_videos_array(videos), html, count=1)
 
     out_path = os.path.join(ROOT, "index.html")
     with open(out_path, "w", encoding="utf-8") as f:
@@ -75,16 +60,22 @@ def build_index(videos):
     print("generated index.html")
 
 
-def build_video_pages(videos):
+def build_video_pages(videos, only_new=True):
+    """Generate halaman per video. Dengan only_new=True (default), HANYA
+    video yang belum punya file HTML yang dibuatkan halamannya — video
+    lama tidak disentuh sama sekali, karena isinya sudah tidak lagi
+    bergantung pada daftar video lain (itu diambil dinamis lewat fetch)."""
     template_path = os.path.join(ROOT, "templates", "video.template.html")
     with open(template_path, "r", encoding="utf-8") as f:
         template = f.read()
 
-    marker = re.compile(r"const VIDEOS = /\*__VIDEOS_JSON__\*/\[\];\n")
-    videos_js = js_videos_array(videos)
-
     for v in videos:
         slug = slugify(v["judul"])
+        out_path = os.path.join(ROOT, f"{slug}.html")
+
+        if only_new and os.path.exists(out_path):
+            continue
+
         drive_id = v["driveId"]
         og_image = cover_image_url(slug, drive_id)
 
@@ -95,9 +86,7 @@ def build_video_pages(videos):
         html = html.replace("__OG_URL__", f"{SITE_BASE_URL}{slug}.html")
         html = html.replace("__OG_IMAGE__", og_image)
         html = html.replace("__VIDEO_ID__", drive_id)
-        html = marker.sub(videos_js, html, count=1)
 
-        out_path = os.path.join(ROOT, f"{slug}.html")
         with open(out_path, "w", encoding="utf-8") as f:
             f.write(html)
         print(f"generated {slug}.html")
@@ -108,7 +97,8 @@ def main():
     if not videos:
         print("videos.json kosong, tidak ada yang digenerate.", file=sys.stderr)
         return
-    build_index(videos)
+    if not os.path.exists(os.path.join(ROOT, "index.html")):
+        build_index()
     build_video_pages(videos)
 
 

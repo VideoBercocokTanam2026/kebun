@@ -304,116 +304,11 @@
 
 <script>
   /* =====================================================================
-     Video halaman ini. ID ini HARUS sama dengan salah satu video di
-     dalam array VIDEOS di bawah, dan array VIDEOS ini harus SAMA PERSIS
-     dengan array VIDEOS di index.html.
+     Video halaman ini (diisi otomatis oleh generate.py). Daftar "Video
+     Lainnya" diambil otomatis (fetch) dari videos.json setiap halaman
+     dibuka — halaman ini tidak perlu diupload ulang kalau ada video baru.
      ===================================================================== */
   const CURRENT_VIDEO_ID = "1Z1IYzb2KeB7Xy2oEcEH__aih-IBaSmAw";
-
-  const VIDEOS = [
-    {
-      judul: "Bercocok Tanam Part 18",
-      deskripsi: "",
-      driveLink: "https://drive.google.com/file/d/1LGewfpsxHgiBX7ft9QC_T57TIvJQsJkk/view",
-      tanggal: "9 Agustus 2026"
-    },
-    {
-      judul: "Bercocok Tanam Part 17",
-      deskripsi: "",
-      driveLink: "https://drive.google.com/file/d/1Z1IYzb2KeB7Xy2oEcEH__aih-IBaSmAw/view",
-      tanggal: "9 Agustus 2026"
-    },
-    {
-      judul: "Bercocok Tanam Part 16",
-      deskripsi: "",
-      driveLink: "https://drive.google.com/file/d/1g1QMICc9XEkTvWaibvD3nCFwNU-q2w4n/view",
-      tanggal: "8 Agustus 2026"
-    },
-    {
-      judul: "Bercocok Tanam Part 15",
-      deskripsi: "",
-      driveLink: "https://drive.google.com/file/d/1_-oW_IztT26BhQyWpkmOC7YQcyy7GUUN/view",
-      tanggal: "8 Agustus 2026"
-    },
-    {
-      judul: "Bercocok Tanam Part 14",
-      deskripsi: "",
-      driveLink: "https://drive.google.com/file/d/1yIINeyKG_c1lG-c4ZaB2g2bEX9Wej5de/view",
-      tanggal: "8 Agustus 2026"
-    },
-    {
-      judul: "Bercocok Tanam Part 13",
-      deskripsi: "",
-      driveLink: "https://drive.google.com/file/d/1voAXGqMAXOxGgp8B-5wPh3-XOYVD-WDk/view",
-      tanggal: "8 Agustus 2026"
-    },
-    {
-      judul: "Bercocok Tanam Part 12",
-      deskripsi: "",
-      driveLink: "https://drive.google.com/file/d/1E83l6GGbqpsdyVYdeD6otUbwRH9Qz-7Y/view",
-      tanggal: "8 Agustus 2026"
-    },
-    {
-      judul: "Bercocok Tanam Part 11",
-      deskripsi: "",
-      driveLink: "https://drive.google.com/file/d/1-zvABErJZx9OHwikcEkMLv1ZJjNDfH8f/view",
-      tanggal: "8 Agustus 2026"
-    },
-    {
-      judul: "Bercocok Tanam Part 10",
-      deskripsi: "",
-      driveLink: "https://drive.google.com/file/d/1tp-8TDhxlsTWdVJqcx94T-MsaMeX1a2Q/view",
-      tanggal: "8 Agustus 2026"
-    },
-    {
-      judul: "Bercocok Tanam Part 9",
-      deskripsi: "",
-      driveLink: "https://drive.google.com/file/d/1dNbOT-XXVnz0DEglavr7sZ1ETO0xdnxG/view",
-      tanggal: "7 Agustus 2026"
-    },
-    {
-      judul: "Bercocok Tanam Part 8",
-      deskripsi: "",
-      driveLink: "https://drive.google.com/file/d/1bttcBT9ni-CCWQRaX4GAyCNhPf5M46x8/view",
-      tanggal: "7 Agustus 2026"
-    },
-    {
-      judul: "Bercocok Tanam Part 6",
-      deskripsi: "",
-      driveLink: "https://drive.google.com/file/d/1saCcUqTVAkb_H2Y6gMDEf7648rPc2jXs/view",
-      tanggal: "6 Agustus 2026"
-    },
-    {
-      judul: "Bercocok Tanam Part 5",
-      deskripsi: "",
-      driveLink: "https://drive.google.com/file/d/11CGYcRY8K1SdUSynasDWkeiKIRgK9YXl/view",
-      tanggal: "6 Agustus 2026"
-    },
-    {
-      judul: "Bercocok Tanam Part 4",
-      deskripsi: "",
-      driveLink: "https://drive.google.com/file/d/1QKBAxb4VjVPIqRkrHZCmRmh1u_qE5AJo/view",
-      tanggal: "5 Agustus 2026"
-    },
-    {
-      judul: "Bercocok Tanam Part 3",
-      deskripsi: "",
-      driveLink: "https://drive.google.com/file/d/1gwElMeoQO49sJQOPovNEOjmSuaTqh-7k/view",
-      tanggal: "5 Agustus 2026"
-    },
-    {
-      judul: "Bercocok Tanam Part 2",
-      deskripsi: "",
-      driveLink: "https://drive.google.com/file/d/1OYrrjwe6zGuAdLo3P0-uYwni2ltvXTZK/view",
-      tanggal: "5 Agustus 2026"
-    },
-    {
-      judul: "Bercocok Tanam Part 1",
-      deskripsi: "",
-      driveLink: "https://drive.google.com/file/d/1Nxoe1YXGN5u56hXMkPaaazERbNgd4GJG/view",
-      tanggal: "4 Agustus 2026"
-    }
-  ];
 
   const BANNER_ADS = [
     { key:'0e40ba1dba3a8f141432b1fab8600c41', width:300, height:250 },
@@ -501,8 +396,8 @@
     return frame;
   }
 
-  function init(){
-    const targetIndex = VIDEOS.findIndex(v => extractDriveId(v.driveLink) === CURRENT_VIDEO_ID);
+  function init(VIDEOS){
+    const targetIndex = VIDEOS.findIndex(v => v.driveId === CURRENT_VIDEO_ID);
     if(targetIndex === -1) return;
 
     const v = VIDEOS[targetIndex];
@@ -535,7 +430,7 @@
       document.getElementById('other-heading').style.display = 'block';
       const otherWrap = document.getElementById('other-videos');
       others.forEach(o => {
-        const oId = extractDriveId(o.driveLink);
+        const oId = o.driveId;
         const oPage = slugify(o.judul) + '.html';
         const oCard = document.createElement('div');
         oCard.className = 'other-card';
@@ -556,7 +451,10 @@
     }
   }
 
-  init();
+  fetch('videos.json')
+    .then(r => r.json())
+    .then(data => init(data))
+    .catch(err => console.error('Gagal memuat videos.json', err));
   renderBannerAd(document.getElementById('ad-top-728x90'), { key:'d193d159f6ead21ab2fd4d86b506bc2e', width:728, height:90 });
   renderBannerAd(document.getElementById('ad-top-320x50'), { key:'e27a459a9e6188b68843a4fa32f52041', width:320, height:50 });
 </script>

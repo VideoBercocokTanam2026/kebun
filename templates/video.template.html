@@ -304,13 +304,11 @@
 
 <script>
   /* =====================================================================
-     Video halaman ini. ID ini HARUS sama dengan salah satu video di
-     dalam array VIDEOS di bawah, dan array VIDEOS ini harus SAMA PERSIS
-     dengan array VIDEOS di index.html.
+     Video halaman ini (diisi otomatis oleh generate.py). Daftar "Video
+     Lainnya" diambil otomatis (fetch) dari videos.json setiap halaman
+     dibuka — halaman ini tidak perlu diupload ulang kalau ada video baru.
      ===================================================================== */
   const CURRENT_VIDEO_ID = "__VIDEO_ID__";
-
-  const VIDEOS = /*__VIDEOS_JSON__*/[];
 
   const BANNER_ADS = [
     { key:'0e40ba1dba3a8f141432b1fab8600c41', width:300, height:250 },
@@ -398,8 +396,8 @@
     return frame;
   }
 
-  function init(){
-    const targetIndex = VIDEOS.findIndex(v => extractDriveId(v.driveLink) === CURRENT_VIDEO_ID);
+  function init(VIDEOS){
+    const targetIndex = VIDEOS.findIndex(v => v.driveId === CURRENT_VIDEO_ID);
     if(targetIndex === -1) return;
 
     const v = VIDEOS[targetIndex];
@@ -432,7 +430,7 @@
       document.getElementById('other-heading').style.display = 'block';
       const otherWrap = document.getElementById('other-videos');
       others.forEach(o => {
-        const oId = extractDriveId(o.driveLink);
+        const oId = o.driveId;
         const oPage = slugify(o.judul) + '.html';
         const oCard = document.createElement('div');
         oCard.className = 'other-card';
@@ -453,7 +451,10 @@
     }
   }
 
-  init();
+  fetch('videos.json')
+    .then(r => r.json())
+    .then(data => init(data))
+    .catch(err => console.error('Gagal memuat videos.json', err));
   renderBannerAd(document.getElementById('ad-top-728x90'), { key:'d193d159f6ead21ab2fd4d86b506bc2e', width:728, height:90 });
   renderBannerAd(document.getElementById('ad-top-320x50'), { key:'e27a459a9e6188b68843a4fa32f52041', width:320, height:50 });
 </script>
