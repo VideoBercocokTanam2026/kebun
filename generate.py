@@ -20,7 +20,7 @@ import re
 import sys
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
-SITE_BASE_URL = "https://videobercocoktanam2026.github.io/kebun/"
+SITE_BASE_URL = "https://bercocoktanam2k26.github.io/kebun-papua/"
 DEFAULT_DESC = "Kumpulan video bercocok tanam berepisode, dari bibit sampai panen."
 
 
