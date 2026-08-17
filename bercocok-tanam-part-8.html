@@ -310,14 +310,31 @@
      ===================================================================== */
   const CURRENT_VIDEO_ID = "1bttcBT9ni-CCWQRaX4GAyCNhPf5M46x8";
 
-  const BANNER_ADS = [
-    { key:'4d27f935deba9bc05166c12b06b00c42', width:300, height:250 },
-    { key:'a43bb6b4655190fce3e4a83e3a6f8096', width:160, height:300 },
-    { key:'07dd379c65a286df957d7db39551703c', width:160, height:600 },
-    { key:'8c6e050c99eec8e0783e1d332b9cdedf', width:468, height:60  },
-    { key:'cf6aef4585c4817c49bab5e3f1077dc9', width:728, height:90  }
+  /* =====================================================================
+     KONFIGURASI IKLAN — berdasarkan data revenue Adsterra nyata.
+     Ubah true/false untuk menyalakan/mematikan satu jenis iklan.
+     ===================================================================== */
+  const AD_CONFIG = {
+    topBanner: true,          // 728x90 desktop / 320x50 mobile di bagian atas
+    inContentRotation: true   // baris iklan di antara video
+  };
+
+  // Urutan & pengulangan menentukan FREKUENSI kemunculan tiap ukuran.
+  // 320x50, 300x250, Native diulang lebih banyak (revenue/CPM terbaik).
+  // 160x300 / 160x600 / 468x60 tetap aktif tapi ditaruh paling jarang
+  // (revenue sangat rendah berdasarkan data, tapi tidak dihapus).
+  const ROTATION_POOL = [
+    { type:'banner', key:'31ecdbf5858a594406627c7268f204d3', width:320, height:50 },
+    { type:'banner', key:'31ecdbf5858a594406627c7268f204d3', width:320, height:50 },
+    { type:'banner', key:'31ecdbf5858a594406627c7268f204d3', width:320, height:50 },
+    { type:'banner', key:'4d27f935deba9bc05166c12b06b00c42', width:300, height:250 },
+    { type:'banner', key:'4d27f935deba9bc05166c12b06b00c42', width:300, height:250 },
+    { type:'native', key:'bb545ebcedb7e3fde88a08926f7600ff' },
+    { type:'native', key:'bb545ebcedb7e3fde88a08926f7600ff' },
+    { type:'banner', key:'a43bb6b4655190fce3e4a83e3a6f8096', width:160, height:300 },
+    { type:'banner', key:'07dd379c65a286df957d7db39551703c', width:160, height:600 },
+    { type:'banner', key:'8c6e050c99eec8e0783e1d332b9cdedf', width:468, height:60  }
   ];
-  const NATIVE_AD_KEY = 'bb545ebcedb7e3fde88a08926f7600ff';
 
   function renderBannerAd(container, ad){
     const iframe = document.createElement('iframe');
@@ -335,31 +352,36 @@
     doc.close();
   }
 
-  function renderNativeAd(container){
+  function renderNativeAd(container, ad){
     const holder = document.createElement('div');
-    holder.id = 'container-' + NATIVE_AD_KEY;
+    holder.id = 'container-' + ad.key;
     container.appendChild(holder);
     const script = document.createElement('script');
     script.async = true;
     script.setAttribute('data-cfasync', 'false');
-    script.src = 'https://pl30819270.effectivecpmnetwork.com/' + NATIVE_AD_KEY + '/invoke.js';
+    script.src = 'https://pl30819270.effectivecpmnetwork.com/' + ad.key + '/invoke.js';
     container.appendChild(script);
   }
 
-  let adRotationCounter = 0;
-  function insertAdRow(container){
+  // rotationCounter untuk ambil giliran ukuran berikutnya dari ROTATION_POOL.
+  let rotationCounter = 0;
+  function nextAd(){
+    const ad = ROTATION_POOL[rotationCounter % ROTATION_POOL.length];
+    rotationCounter++;
+    return ad;
+  }
+  function insertAdRow(container, forcedAd){
+    if(!AD_CONFIG.inContentRotation) return;
     const wrap = document.createElement('div');
     wrap.className = 'ad-row';
     wrap.innerHTML = '<span class="ad-label">Iklan</span>';
     container.appendChild(wrap);
 
-    const rotationLength = BANNER_ADS.length + 1;
-    const slot = adRotationCounter % rotationLength;
-    adRotationCounter++;
-    if(slot === BANNER_ADS.length){
-      renderNativeAd(wrap);
+    const ad = forcedAd || nextAd();
+    if(ad.type === 'native'){
+      renderNativeAd(wrap, ad);
     } else {
-      renderBannerAd(wrap, BANNER_ADS[slot]);
+      renderBannerAd(wrap, ad);
     }
   }
 
@@ -423,7 +445,7 @@
     card.appendChild(frame);
     mainWrap.appendChild(card);
 
-    insertAdRow(document.getElementById('ad-after-main'));
+    insertAdRow(document.getElementById('ad-after-main'), ROTATION_POOL[0]);
 
     const others = VIDEOS.filter((_, i) => i !== targetIndex);
     if(others.length){
@@ -455,8 +477,10 @@
     .then(r => r.json())
     .then(data => init(data))
     .catch(err => console.error('Gagal memuat videos.json', err));
-  renderBannerAd(document.getElementById('ad-top-728x90'), { key:'cf6aef4585c4817c49bab5e3f1077dc9', width:728, height:90 });
-  renderBannerAd(document.getElementById('ad-top-320x50'), { key:'31ecdbf5858a594406627c7268f204d3', width:320, height:50 });
+  if(AD_CONFIG.topBanner){
+    renderBannerAd(document.getElementById('ad-top-728x90'), { key:'cf6aef4585c4817c49bab5e3f1077dc9', width:728, height:90 });
+    renderBannerAd(document.getElementById('ad-top-320x50'), { key:'31ecdbf5858a594406627c7268f204d3', width:320, height:50 });
+  }
 </script>
 
 </body>
