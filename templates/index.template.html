@@ -357,18 +357,30 @@
      ===================================================================== */
 
   /* =====================================================================
-     KODE IKLAN ADSTERRA
-     Semua key di bawah sudah dari akun kamu. Kalau suatu saat mau ganti
-     salah satu unit iklan, cukup ganti nilai "key" di sini.
+     KONFIGURASI IKLAN — berdasarkan data revenue Adsterra nyata.
+     Ubah true/false untuk menyalakan/mematikan satu jenis iklan.
      ===================================================================== */
-  const BANNER_ADS = [
-    { key:'4d27f935deba9bc05166c12b06b00c42', width:300, height:250 }, // 300x250
-    { key:'a43bb6b4655190fce3e4a83e3a6f8096', width:160, height:300 }, // 160x300
-    { key:'07dd379c65a286df957d7db39551703c', width:160, height:600 }, // 160x600
-    { key:'8c6e050c99eec8e0783e1d332b9cdedf', width:468, height:60  }, // 468x60
-    { key:'cf6aef4585c4817c49bab5e3f1077dc9', width:728, height:90  }  // 728x90
+  const AD_CONFIG = {
+    topBanner: true,          // 728x90 desktop / 320x50 mobile di bagian atas
+    inContentRotation: true   // baris iklan di antara video
+  };
+
+  // Urutan & pengulangan menentukan FREKUENSI kemunculan tiap ukuran.
+  // 320x50, 300x250, Native diulang lebih banyak (revenue/CPM terbaik).
+  // 160x300 / 160x600 / 468x60 tetap aktif tapi ditaruh paling jarang
+  // (revenue sangat rendah berdasarkan data, tapi tidak dihapus).
+  const ROTATION_POOL = [
+    { type:'banner', key:'31ecdbf5858a594406627c7268f204d3', width:320, height:50 },
+    { type:'banner', key:'31ecdbf5858a594406627c7268f204d3', width:320, height:50 },
+    { type:'banner', key:'31ecdbf5858a594406627c7268f204d3', width:320, height:50 },
+    { type:'banner', key:'4d27f935deba9bc05166c12b06b00c42', width:300, height:250 },
+    { type:'banner', key:'4d27f935deba9bc05166c12b06b00c42', width:300, height:250 },
+    { type:'native', key:'bb545ebcedb7e3fde88a08926f7600ff' },
+    { type:'native', key:'bb545ebcedb7e3fde88a08926f7600ff' },
+    { type:'banner', key:'a43bb6b4655190fce3e4a83e3a6f8096', width:160, height:300 },
+    { type:'banner', key:'07dd379c65a286df957d7db39551703c', width:160, height:600 },
+    { type:'banner', key:'8c6e050c99eec8e0783e1d332b9cdedf', width:468, height:60  }
   ];
-  const NATIVE_AD_KEY = 'bb545ebcedb7e3fde88a08926f7600ff';
 
   // Menulis iklan banner (format atOptions) ke dalam iframe terpisah,
   // supaya aman dipasang secara dinamis lewat JavaScript.
@@ -390,30 +402,33 @@
 
   // Native banner dipasang langsung ke DOM (bukan lewat document.write)
   // supaya tampilannya mengikuti gaya halaman.
-  function renderNativeAd(container){
+  function renderNativeAd(container, ad){
     const holder = document.createElement('div');
-    holder.id = 'container-' + NATIVE_AD_KEY;
+    holder.id = 'container-' + ad.key;
     container.appendChild(holder);
     const script = document.createElement('script');
     script.async = true;
     script.setAttribute('data-cfasync', 'false');
-    script.src = 'https://pl30819270.effectivecpmnetwork.com/' + NATIVE_AD_KEY + '/invoke.js';
+    script.src = 'https://pl30819270.effectivecpmnetwork.com/' + ad.key + '/invoke.js';
     container.appendChild(script);
   }
 
-  // Menyisipkan satu baris iklan penuh lebar setelah sebuah video.
-  function insertAdRow(feed, adRowIndex){
+  // Menyisipkan satu baris iklan penuh lebar setelah sebuah video,
+  // mengambil giliran ukuran berikutnya dari ROTATION_POOL.
+  let rotationCounter = 0;
+  function insertAdRow(feed){
+    if(!AD_CONFIG.inContentRotation) return;
     const wrap = document.createElement('div');
     wrap.className = 'ad-row';
     wrap.innerHTML = '<span class="ad-label">Iklan</span>';
     feed.appendChild(wrap);
 
-    const rotationLength = BANNER_ADS.length + 1; // + 1 untuk native banner
-    const slot = adRowIndex % rotationLength;
-    if(slot === BANNER_ADS.length){
-      renderNativeAd(wrap);
+    const ad = ROTATION_POOL[rotationCounter % ROTATION_POOL.length];
+    rotationCounter++;
+    if(ad.type === 'native'){
+      renderNativeAd(wrap, ad);
     } else {
-      renderBannerAd(wrap, BANNER_ADS[slot]);
+      renderBannerAd(wrap, ad);
     }
   }
 
@@ -455,8 +470,6 @@
     if(window.innerWidth <= 520) columnsNow = 1;
     else if(window.innerWidth <= 900) columnsNow = 2;
 
-    let adRowIndex = 0;
-
     VIDEOS.forEach((v, i) => {
       const episodeNumber = VIDEOS.length - i;
       const isLatest = i === 0;
@@ -484,8 +497,7 @@
       // mobile, 2 di tablet, 4 di desktop), sebelum lanjut ke baris/video
       // berikutnya.
       if((i + 1) % columnsNow === 0){
-        insertAdRow(feed, adRowIndex);
-        adRowIndex++;
+        insertAdRow(feed);
       }
     });
   }
@@ -497,8 +509,10 @@
       document.getElementById('feed').innerHTML = '<div class="empty">Gagal memuat daftar video. Coba muat ulang halaman.</div>';
       console.error(err);
     });
-  renderBannerAd(document.getElementById('ad-top-728x90'), { key:'cf6aef4585c4817c49bab5e3f1077dc9', width:728, height:90 });
-  renderBannerAd(document.getElementById('ad-top-320x50'), { key:'31ecdbf5858a594406627c7268f204d3', width:320, height:50 });
+  if(AD_CONFIG.topBanner){
+    renderBannerAd(document.getElementById('ad-top-728x90'), { key:'cf6aef4585c4817c49bab5e3f1077dc9', width:728, height:90 });
+    renderBannerAd(document.getElementById('ad-top-320x50'), { key:'31ecdbf5858a594406627c7268f204d3', width:320, height:50 });
+  }
 </script>
 
 </body>
