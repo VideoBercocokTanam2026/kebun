@@ -481,7 +481,7 @@
       card.innerHTML = `
         ${isLatest ? '<span class="badge-baru">BARU</span>' : ''}
         <a class="video-frame" href="${pageUrl}">
-          <img class="video-thumb" src="https://drive.google.com/thumbnail?id=${driveId}&sz=w1000" alt="${v.judul}" loading="lazy">
+          <img class="video-thumb" src="covers/${slugify(v.judul)}.png" alt="${v.judul}" loading="lazy" onerror="this.onerror=null;this.src='https://drive.google.com/thumbnail?id=${driveId}&sz=w1000';">
           <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
         </a>
         <div class="card-meta">
