@@ -376,10 +376,36 @@
     return link.trim();
   }
 
+  function getCover(video){
+    if(video && video.ogImage) return video.ogImage;
+    if(!video || !video.judul) return "";
+    const slug = slugify(video.judul);
+    return `covers/${slug}.jpg`;
+  }
+
   function slugify(str){
     return str.toLowerCase().trim()
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/(^-|-$)/g, '');
+  }
+
+  function thumbImgHTML(v){
+    const slug = slugify(v.judul);
+    const candidates = [];
+    const cover = getCover(v);
+    if(cover) candidates.push(cover);
+    candidates.push(`covers/${slug}.jpg`, `covers/${slug}.jpeg`, `covers/${slug}.png`, `covers/${slug}.webp`);
+    const first = candidates.shift();
+    const fallbackAttr = candidates.map(encodeURIComponent).join('|');
+    return `<img class="video-thumb" src="${first || ''}" data-fallback="${fallbackAttr}" onerror="thumbFallback(this)" alt="${v.judul}" loading="lazy">`;
+  }
+
+  function thumbFallback(img){
+    const list = (img.dataset.fallback || '').split('|').filter(Boolean);
+    if(!list.length){ img.onerror = null; return; }
+    const next = decodeURIComponent(list.shift());
+    img.dataset.fallback = list.join('|');
+    img.src = next;
   }
 
   function makeVideoFrame(driveId, judul, autoLoad, linkToPage){
@@ -390,7 +416,7 @@
       frame.innerHTML = `<iframe src="https://drive.google.com/file/d/${driveId}/preview?autoplay=1" allow="autoplay" allowfullscreen></iframe>`;
     } else {
       frame.innerHTML = `
-        <img class="video-thumb" src="https://drive.google.com/thumbnail?id=${driveId}&sz=w1000" alt="${judul}" loading="lazy">
+        ${thumbImgHTML(v)}
         <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
       `;
     }

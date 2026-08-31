@@ -1,3 +1,4 @@
+<!-- generated-by-repopilot -->
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -10,17 +11,17 @@
 <meta property="og:type" content="video.other">
 <meta property="og:title" content="Bercocok Tanam Part 58">
 <meta property="og:description" content="Kumpulan video bercocok tanam berepisode, dari bibit sampai panen.">
-<meta property="og:url" content="https://bercocoktanam2k26.github.io/kebun-papua/bercocok-tanam-part-58.html">
-<meta property="og:image" content="https://bercocoktanam2k26.github.io/kebun-papua/covers/bercocok-tanam-part-58.png">
+<meta property="og:url" content="https://viral18plus.github.io/papua/bercocok-tanam-part-58.html">
+<meta property="og:image" content="">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="1200">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Bercocok Tanam Part 58">
 <meta name="twitter:description" content="Kumpulan video bercocok tanam berepisode, dari bibit sampai panen.">
-<meta name="twitter:image" content="https://bercocoktanam2k26.github.io/kebun-papua/covers/bercocok-tanam-part-58.png">
+<meta name="twitter:image" content="">
 
 <!-- IKLAN ADSTERRA — POPUNDER (aktif di seluruh halaman) -->
-<script src="https://pl30819269.effectivecpmnetwork.com/c9/46/3d/c9463d0f9c7954a9e5abf6c378abee09.js"></script>
+<script src="https://pl30677988.effectivecpmnetwork.com/3b/37/e2/3b37e254b77bbbdd9815f86b60261fe5.js"></script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -294,13 +295,13 @@
   <p class="foot-title">Video Bercocok Tanam</p>
   <p>Semua video ditayangkan lewat Google Drive. Episode baru menyusul setiap minggu.</p>
   <div class="smartlink-slot">
-    <a href="https://www.effectivecpmnetwork.com/yy4859522?key=65ec0f228256a2f19b9ebf23b56a5c26" target="_blank" rel="nofollow noopener">Rekomendasi untuk kamu</a>
+    <a href="https://www.effectivecpmnetwork.com/hqe2p37ibn?key=f8ce79e82a846533d89c5967aaa9e5d7" target="_blank" rel="nofollow noopener">Rekomendasi untuk kamu</a>
   </div>
 </footer>
 
 <!-- IKLAN ADSTERRA — SOCIAL BAR -->
 <div id="socialbar-slot"></div>
-<script src="https://pl30819271.effectivecpmnetwork.com/f0/e7/cf/f0e7cf41b81e26d2fe4e28a0dc6998d4.js"></script>
+<script src="https://pl30677990.effectivecpmnetwork.com/41/e6/4f/41e64f126b33b1b3fa16856e129eac92.js"></script>
 
 <script>
   /* =====================================================================
@@ -310,31 +311,14 @@
      ===================================================================== */
   const CURRENT_VIDEO_ID = "1ez9fgpyk34FfuXfpuaSlesSPjnu08aWm";
 
-  /* =====================================================================
-     KONFIGURASI IKLAN — berdasarkan data revenue Adsterra nyata.
-     Ubah true/false untuk menyalakan/mematikan satu jenis iklan.
-     ===================================================================== */
-  const AD_CONFIG = {
-    topBanner: true,          // 728x90 desktop / 320x50 mobile di bagian atas
-    inContentRotation: true   // baris iklan di antara video
-  };
-
-  // Urutan & pengulangan menentukan FREKUENSI kemunculan tiap ukuran.
-  // 320x50, 300x250, Native diulang lebih banyak (revenue/CPM terbaik).
-  // 160x300 / 160x600 / 468x60 tetap aktif tapi ditaruh paling jarang
-  // (revenue sangat rendah berdasarkan data, tapi tidak dihapus).
-  const ROTATION_POOL = [
-    { type:'banner', key:'31ecdbf5858a594406627c7268f204d3', width:320, height:50 },
-    { type:'banner', key:'31ecdbf5858a594406627c7268f204d3', width:320, height:50 },
-    { type:'banner', key:'31ecdbf5858a594406627c7268f204d3', width:320, height:50 },
-    { type:'banner', key:'4d27f935deba9bc05166c12b06b00c42', width:300, height:250 },
-    { type:'banner', key:'4d27f935deba9bc05166c12b06b00c42', width:300, height:250 },
-    { type:'native', key:'bb545ebcedb7e3fde88a08926f7600ff' },
-    { type:'native', key:'bb545ebcedb7e3fde88a08926f7600ff' },
-    { type:'banner', key:'a43bb6b4655190fce3e4a83e3a6f8096', width:160, height:300 },
-    { type:'banner', key:'07dd379c65a286df957d7db39551703c', width:160, height:600 },
-    { type:'banner', key:'8c6e050c99eec8e0783e1d332b9cdedf', width:468, height:60  }
+  const BANNER_ADS = [
+    { key:'0e40ba1dba3a8f141432b1fab8600c41', width:300, height:250 },
+    { key:'337feed2239192dfb25dbe9bd9125be5', width:160, height:300 },
+    { key:'22d5eb295bd10a3b8cd2716d507e8a06', width:160, height:600 },
+    { key:'f947d5407c089e1e084091836a5c5dd7', width:468, height:60  },
+    { key:'d193d159f6ead21ab2fd4d86b506bc2e', width:728, height:90  }
   ];
+  const NATIVE_AD_KEY = '98dcae4f009cb31f13e8cb6fe35988ec';
 
   function renderBannerAd(container, ad){
     const iframe = document.createElement('iframe');
@@ -352,36 +336,31 @@
     doc.close();
   }
 
-  function renderNativeAd(container, ad){
+  function renderNativeAd(container){
     const holder = document.createElement('div');
-    holder.id = 'container-' + ad.key;
+    holder.id = 'container-' + NATIVE_AD_KEY;
     container.appendChild(holder);
     const script = document.createElement('script');
     script.async = true;
     script.setAttribute('data-cfasync', 'false');
-    script.src = 'https://pl30819270.effectivecpmnetwork.com/' + ad.key + '/invoke.js';
+    script.src = 'https://pl30677989.effectivecpmnetwork.com/' + NATIVE_AD_KEY + '/invoke.js';
     container.appendChild(script);
   }
 
-  // rotationCounter untuk ambil giliran ukuran berikutnya dari ROTATION_POOL.
-  let rotationCounter = 0;
-  function nextAd(){
-    const ad = ROTATION_POOL[rotationCounter % ROTATION_POOL.length];
-    rotationCounter++;
-    return ad;
-  }
-  function insertAdRow(container, forcedAd){
-    if(!AD_CONFIG.inContentRotation) return;
+  let adRotationCounter = 0;
+  function insertAdRow(container){
     const wrap = document.createElement('div');
     wrap.className = 'ad-row';
     wrap.innerHTML = '<span class="ad-label">Iklan</span>';
     container.appendChild(wrap);
 
-    const ad = forcedAd || nextAd();
-    if(ad.type === 'native'){
-      renderNativeAd(wrap, ad);
+    const rotationLength = BANNER_ADS.length + 1;
+    const slot = adRotationCounter % rotationLength;
+    adRotationCounter++;
+    if(slot === BANNER_ADS.length){
+      renderNativeAd(wrap);
     } else {
-      renderBannerAd(wrap, ad);
+      renderBannerAd(wrap, BANNER_ADS[slot]);
     }
   }
 
@@ -397,23 +376,47 @@
     return link.trim();
   }
 
+  function getCover(video){
+    if(video && video.ogImage) return video.ogImage;
+    if(!video || !video.judul) return "";
+    const slug = slugify(video.judul);
+    return `covers/${slug}.jpg`;
+  }
+
   function slugify(str){
     return str.toLowerCase().trim()
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/(^-|-$)/g, '');
   }
 
-  function makeVideoFrame(driveId, judul, autoLoad, linkToPage, coverUrl){
+  function thumbImgHTML(v){
+    const slug = slugify(v.judul);
+    const candidates = [];
+    const cover = getCover(v);
+    if(cover) candidates.push(cover);
+    candidates.push(`covers/${slug}.jpg`, `covers/${slug}.jpeg`, `covers/${slug}.png`, `covers/${slug}.webp`);
+    const first = candidates.shift();
+    const fallbackAttr = candidates.map(encodeURIComponent).join('|');
+    return `<img class="video-thumb" src="${first || ''}" data-fallback="${fallbackAttr}" onerror="thumbFallback(this)" alt="${v.judul}" loading="lazy">`;
+  }
+
+  function thumbFallback(img){
+    const list = (img.dataset.fallback || '').split('|').filter(Boolean);
+    if(!list.length){ img.onerror = null; return; }
+    const next = decodeURIComponent(list.shift());
+    img.dataset.fallback = list.join('|');
+    img.src = next;
+  }
+
+  function makeVideoFrame(driveId, judul, autoLoad, linkToPage){
     const frame = document.createElement(autoLoad ? 'div' : 'a');
     frame.className = 'video-frame';
     if(!autoLoad) frame.href = linkToPage;
     if(autoLoad){
       frame.innerHTML = `<iframe src="https://drive.google.com/file/d/${driveId}/preview?autoplay=1" allow="autoplay" allowfullscreen></iframe>`;
     } else {
-      const driveThumb = `https://drive.google.com/thumbnail?id=${driveId}&sz=w1000`;
-      const thumbSrc = coverUrl || driveThumb;
       frame.innerHTML = `
-        <img class="video-thumb" src="${thumbSrc}" alt="${judul}" loading="lazy" onerror="this.onerror=null;this.src='${driveThumb}';">
+        ${thumbImgHTML(v)}
         <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
       `;
     }
@@ -438,7 +441,7 @@
       <h2>${v.judul}</h2>
       ${v.deskripsi ? `<p class="desc">${v.deskripsi}</p>` : ''}
     `;
-    const frame = makeVideoFrame(CURRENT_VIDEO_ID, v.judul, false, '#', `covers/${slugify(v.judul)}.png`);
+    const frame = makeVideoFrame(CURRENT_VIDEO_ID, v.judul, false, '#');
     frame.addEventListener('click', (e) => {
       e.preventDefault();
       const playing = makeVideoFrame(CURRENT_VIDEO_ID, v.judul, true, '#');
@@ -447,7 +450,7 @@
     card.appendChild(frame);
     mainWrap.appendChild(card);
 
-    insertAdRow(document.getElementById('ad-after-main'), ROTATION_POOL[0]);
+    insertAdRow(document.getElementById('ad-after-main'));
 
     const others = VIDEOS.filter((_, i) => i !== targetIndex);
     if(others.length){
@@ -458,7 +461,7 @@
         const oPage = slugify(o.judul) + '.html';
         const oCard = document.createElement('div');
         oCard.className = 'other-card';
-        const oFrame = makeVideoFrame(oId, o.judul, false, oPage, `covers/${slugify(o.judul)}.png`);
+        const oFrame = makeVideoFrame(oId, o.judul, false, oPage);
         oCard.appendChild(oFrame);
         const meta = document.createElement('div');
         meta.className = 'card-meta';
@@ -479,10 +482,8 @@
     .then(r => r.json())
     .then(data => init(data))
     .catch(err => console.error('Gagal memuat videos.json', err));
-  if(AD_CONFIG.topBanner){
-    renderBannerAd(document.getElementById('ad-top-728x90'), { key:'cf6aef4585c4817c49bab5e3f1077dc9', width:728, height:90 });
-    renderBannerAd(document.getElementById('ad-top-320x50'), { key:'31ecdbf5858a594406627c7268f204d3', width:320, height:50 });
-  }
+  renderBannerAd(document.getElementById('ad-top-728x90'), { key:'d193d159f6ead21ab2fd4d86b506bc2e', width:728, height:90 });
+  renderBannerAd(document.getElementById('ad-top-320x50'), { key:'e27a459a9e6188b68843a4fa32f52041', width:320, height:50 });
 </script>
 
 </body>

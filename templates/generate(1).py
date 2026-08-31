@@ -33,7 +33,7 @@ import re
 import sys
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
-SITE_BASE_URL = "https://bercocoktanam2k26.github.io/kebun-papua/"
+SITE_BASE_URL = "https://viral18plus.github.io/papua/"
 DEFAULT_DESC = "Kumpulan video bercocok tanam berepisode, dari bibit sampai panen."
 
 # Marker penanda "halaman ini dibuat oleh generate.py". Harus ada di
@@ -53,14 +53,16 @@ def load_videos():
         return json.load(f)
 
 
-def cover_image_url(slug, drive_id):
-    """Pakai cover custom kalau filenya ada di covers/ (boleh .jpg/.jpeg/.png/.webp),
-    kalau tidak ada fallback ke thumbnail otomatis Google Drive."""
+def cover_image_url(slug, drive_id, og_image=""):
+    """Gunakan ogImage yang sudah tersimpan atau cover lokal. Tidak ada fallback Google Drive."""
+    expected_prefix = f"{SITE_BASE_URL}covers/"
+    if og_image and og_image.startswith(expected_prefix):
+        return og_image
     for ext in ("jpg", "jpeg", "png", "webp"):
         cover_path = os.path.join(ROOT, "covers", f"{slug}.{ext}")
         if os.path.exists(cover_path):
             return f"{SITE_BASE_URL}covers/{slug}.{ext}"
-    return f"https://drive.google.com/thumbnail?id={drive_id}&sz=w1200"
+    return ""
 
 
 def build_index():
@@ -116,7 +118,7 @@ def build_video_pages(videos):
         out_path = os.path.join(ROOT, f"{slug}.html")
 
         drive_id = v["driveId"]
-        og_image = cover_image_url(slug, drive_id)
+        og_image = cover_image_url(slug, drive_id, v.get("ogImage", ""))
 
         html = template
         html = html.replace("__PAGE_TITLE__", v["judul"])

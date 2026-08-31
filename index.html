@@ -10,14 +10,14 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="Video Bercocok Tanam">
 <meta property="og:description" content="Kumpulan video bercocok tanam berepisode, dari bibit sampai panen.">
-<meta property="og:url" content="https://bercocoktanam2k26.github.io/kebun-papua/">
-<meta property="og:image" content="https://bercocoktanam2k26.github.io/kebun-papua/cover.jpg">
+<meta property="og:url" content="https://viral18plus.github.io/papua/">
+<meta property="og:image" content="https://viral18plus.github.io/papua/cover.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Video Bercocok Tanam">
 <meta name="twitter:description" content="Kumpulan video bercocok tanam berepisode, dari bibit sampai panen.">
-<meta name="twitter:image" content="https://bercocoktanam2k26.github.io/kebun-papua/cover.jpg">
+<meta name="twitter:image" content="https://viral18plus.github.io/papua/cover.jpg">
 
 <!-- IKLAN ADSTERRA — POPUNDER (aktif di seluruh halaman) -->
 <script src="https://pl30819269.effectivecpmnetwork.com/c9/46/3d/c9463d0f9c7954a9e5abf6c378abee09.js"></script>
@@ -447,10 +447,36 @@
   // Mengubah judul video jadi nama file (contoh: "Bercocok Tanam Part 1"
   // -> "bercocok-tanam-part-1"). Nama file halaman video individual HARUS
   // mengikuti pola ini juga.
+  function getCover(video){
+    if(video && video.ogImage) return video.ogImage;
+    if(!video || !video.judul) return "";
+    const slug = slugify(video.judul);
+    return `covers/${slug}.jpg`;
+  }
+
   function slugify(str){
     return str.toLowerCase().trim()
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/(^-|-$)/g, '');
+  }
+
+  function thumbImgHTML(v){
+    const slug = slugify(v.judul);
+    const candidates = [];
+    const cover = getCover(v);
+    if(cover) candidates.push(cover);
+    candidates.push(`covers/${slug}.jpg`, `covers/${slug}.jpeg`, `covers/${slug}.png`, `covers/${slug}.webp`);
+    const first = candidates.shift();
+    const fallbackAttr = candidates.map(encodeURIComponent).join('|');
+    return `<img class="video-thumb" src="${first || ''}" data-fallback="${fallbackAttr}" onerror="thumbFallback(this)" alt="${v.judul}" loading="lazy">`;
+  }
+
+  function thumbFallback(img){
+    const list = (img.dataset.fallback || '').split('|').filter(Boolean);
+    if(!list.length){ img.onerror = null; return; }
+    const next = decodeURIComponent(list.shift());
+    img.dataset.fallback = list.join('|');
+    img.src = next;
   }
 
   function renderFeed(VIDEOS){
@@ -481,7 +507,7 @@
       card.innerHTML = `
         ${isLatest ? '<span class="badge-baru">BARU</span>' : ''}
         <a class="video-frame" href="${pageUrl}">
-          <img class="video-thumb" src="covers/${slugify(v.judul)}.png" alt="${v.judul}" loading="lazy" onerror="this.onerror=null;this.src='https://drive.google.com/thumbnail?id=${driveId}&sz=w1000';">
+          ${thumbImgHTML(v)}
           <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
         </a>
         <div class="card-meta">
