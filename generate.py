@@ -65,8 +65,7 @@ def load_videos():
 
 
 def cover_image_url(slug, drive_id, og_image=""):
-    """Gunakan ogImage dari videos.json bila valid; jika kosong, cari cover lokal.
-    Tidak menggunakan thumbnail Google Drive sebagai OG Image."""
+    """Return a local GitHub Pages cover URL only. Never use Google Drive."""
     expected_prefix = f"{SITE_BASE_URL}covers/"
     if og_image and og_image.startswith(expected_prefix):
         return og_image
@@ -75,6 +74,21 @@ def cover_image_url(slug, drive_id, og_image=""):
         if os.path.exists(cover_path):
             return build_og_image(SITE_REPO, slug, ext)
     return ""
+
+
+def validate_og_urls(videos):
+    """Fail the build if any configured OG URL points outside this site."""
+    expected_prefix = f"{SITE_BASE_URL}covers/"
+    invalid = []
+    for video in videos:
+        og = (video.get("ogImage") or "").strip()
+        if not og or not og.startswith(expected_prefix):
+            invalid.append((video.get("judul", "(tanpa judul)"), og))
+    if invalid:
+        print("OG IMAGE VALIDATION FAILED:", file=sys.stderr)
+        for title, og in invalid[:20]:
+            print(f" - {title}: {og or '(kosong)'}", file=sys.stderr)
+        raise SystemExit(1)
 
 
 def build_index(videos):
@@ -161,6 +175,7 @@ def main():
 
     valid_slugs = {slugify(v["judul"]) for v in videos}
 
+    validate_og_urls(videos)
     build_index(videos)
 
     removed = cleanup_orphan_pages(valid_slugs)
