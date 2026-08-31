@@ -12,13 +12,13 @@
 <meta property="og:title" content="Bercocok Tanam Part 35">
 <meta property="og:description" content="Kumpulan video bercocok tanam berepisode, dari bibit sampai panen.">
 <meta property="og:url" content="https://viral18plus.github.io/papua/bercocok-tanam-part-35.html">
-<meta property="og:image" content="">
+<meta property="og:image" content="https://viral18plus.github.io/papua/covers/bercocok-tanam-part-35.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="1200">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Bercocok Tanam Part 35">
 <meta name="twitter:description" content="Kumpulan video bercocok tanam berepisode, dari bibit sampai panen.">
-<meta name="twitter:image" content="">
+<meta name="twitter:image" content="https://viral18plus.github.io/papua/covers/bercocok-tanam-part-35.png">
 
 <!-- IKLAN ADSTERRA — POPUNDER (aktif di seluruh halaman) -->
 <script src="https://pl30677988.effectivecpmnetwork.com/3b/37/e2/3b37e254b77bbbdd9815f86b60261fe5.js"></script>
@@ -408,15 +408,15 @@
     img.src = next;
   }
 
-  function makeVideoFrame(driveId, judul, autoLoad, linkToPage){
+  function makeVideoFrame(video, autoLoad, linkToPage){
     const frame = document.createElement(autoLoad ? 'div' : 'a');
     frame.className = 'video-frame';
     if(!autoLoad) frame.href = linkToPage;
     if(autoLoad){
-      frame.innerHTML = `<iframe src="https://drive.google.com/file/d/${driveId}/preview?autoplay=1" allow="autoplay" allowfullscreen></iframe>`;
+      frame.innerHTML = `<iframe src="https://drive.google.com/file/d/${video.driveId}/preview?autoplay=1" allow="autoplay" allowfullscreen></iframe>`;
     } else {
       frame.innerHTML = `
-        ${thumbImgHTML(v)}
+        ${thumbImgHTML(video)}
         <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
       `;
     }
@@ -441,10 +441,10 @@
       <h2>${v.judul}</h2>
       ${v.deskripsi ? `<p class="desc">${v.deskripsi}</p>` : ''}
     `;
-    const frame = makeVideoFrame(CURRENT_VIDEO_ID, v.judul, false, '#');
+    const frame = makeVideoFrame(v, false, '#');
     frame.addEventListener('click', (e) => {
       e.preventDefault();
-      const playing = makeVideoFrame(CURRENT_VIDEO_ID, v.judul, true, '#');
+      const playing = makeVideoFrame(v, true, '#');
       frame.replaceWith(playing);
     });
     card.appendChild(frame);
@@ -461,7 +461,7 @@
         const oPage = slugify(o.judul) + '.html';
         const oCard = document.createElement('div');
         oCard.className = 'other-card';
-        const oFrame = makeVideoFrame(oId, o.judul, false, oPage);
+        const oFrame = makeVideoFrame(o, false, oPage);
         oCard.appendChild(oFrame);
         const meta = document.createElement('div');
         meta.className = 'card-meta';
