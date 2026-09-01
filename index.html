@@ -1,962 +1,545 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#151a22">
-<title>RepoPilot AI</title>
-<link rel="manifest" href="manifest.json">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Video Bercocok Tanam</title>
+<meta name="description" content="Kumpulan video bercocok tanam berepisode, dari bibit sampai panen.">
+
+<!-- Open Graph (preview saat link dibagikan ke Facebook/WhatsApp/Twitter) -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Video Bercocok Tanam">
+<meta property="og:description" content="Kumpulan video bercocok tanam berepisode, dari bibit sampai panen.">
+<meta property="og:url" content="https://viral18plus.github.io/papua/">
+<meta property="og:image" content="https://viral18plus.github.io/papua/covers/ade-pucuk-main-kacang.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Video Bercocok Tanam">
+<meta name="twitter:description" content="Kumpulan video bercocok tanam berepisode, dari bibit sampai panen.">
+<meta name="twitter:image" content="https://viral18plus.github.io/papua/covers/ade-pucuk-main-kacang.png">
+
+<!-- IKLAN ADSTERRA — POPUNDER (aktif di seluruh halaman) -->
+<script src="https://pl30819269.effectivecpmnetwork.com/c9/46/3d/c9463d0f9c7954a9e5abf6c378abee09.js"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
 <style>
-*{box-sizing:border-box}
-body{margin:0;font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:#0e1117;color:#e6edf3}
-button,input,textarea,select{font:inherit}
-button{cursor:pointer;border:0;border-radius:10px;padding:11px 15px;font-weight:600}
-button:disabled{opacity:.5;cursor:not-allowed}
-.app{max-width:1100px;margin:auto;min-height:100vh}
-.top{padding:22px 18px 14px;border-bottom:1px solid #30363d;display:flex;justify-content:space-between;gap:15px;align-items:center}
-.logo{font-weight:800;font-size:22px}
-.logo span{color:#58a6ff}
-.sub{color:#8b949e;font-size:13px}
-.status{padding:7px 12px;border-radius:999px;font-size:12px;white-space:nowrap}
-.status.connecting{background:#2b210b;color:#d29922}
-.status.connected{background:#12351f;color:#3fb950}
-.status.offline{background:#3d1618;color:#ff7b72}
-.nav{display:flex;gap:8px;padding:12px 18px;overflow:auto;border-bottom:1px solid #21262d}
-.nav button{background:#161b22;color:#8b949e;white-space:nowrap}
-.nav button.active{background:#238636;color:white}
-main{padding:18px}
-.panel{background:#161b22;border:1px solid #30363d;border-radius:14px;padding:18px;margin-bottom:16px}
-h1,h2,h3{margin-top:0}
-.muted{color:#8b949e}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
-.stat{background:#0d1117;border:1px solid #30363d;border-radius:12px;padding:15px}
-.stat b{font-size:24px;display:block;margin-top:5px}
-.video{display:flex;justify-content:space-between;gap:15px;align-items:center;border-top:1px solid #30363d;padding:14px 0}
-.video:first-child{border-top:0}
-.video h3{margin:0 0 5px;font-size:16px}
-.actions{display:flex;gap:8px;flex-wrap:wrap}
-.primary{background:#238636;color:white}
-.secondary{background:#30363d;color:white}
-.danger{background:#8e1519;color:white}
-.blue{background:#1f6feb;color:white}
-.purple{background:#8957e5;color:white}
-form{display:grid;gap:12px}
-label{font-size:13px;color:#8b949e}
-input,textarea,select{width:100%;background:#0d1117;border:1px solid #30363d;color:#e6edf3;border-radius:9px;padding:11px}
-input:focus,textarea:focus,select:focus{outline:none;border-color:#58a6ff}
-textarea{min-height:100px;resize:vertical}
-.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.diff{background:#0d1117;border:1px solid #30363d;border-radius:10px;padding:14px;font-family:ui-monospace,monospace;font-size:12.5px;white-space:pre-wrap;line-height:1.7}
-.diff .add{color:#3fb950;display:block}
-.diff .remove{color:#ff7b72;display:block}
-.diff .change{color:#d29922;display:block}
-.protect{border-left:4px solid #d29922;padding:12px;background:#2b210b;border-radius:8px}
-.hidden{display:none}
-.msg{padding:12px 14px;border-radius:10px;margin-bottom:14px;line-height:1.5;font-size:13.5px}
-.msg.success{background:#12351f;color:#3fb950}
-.msg.error{background:#3d1618;color:#ff7b72}
-.msg.warning{background:#2b210b;color:#d29922}
-.msg a{color:#58a6ff}
-.toolbar{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
-.badge-count{background:rgba(0,0,0,.25);border-radius:999px;padding:1px 8px;font-size:11.5px;margin-left:6px}
-.commit-item{border-top:1px solid #30363d;padding:12px 0;font-size:13px}
-.commit-item:first-child{border-top:0}
-.commit-item .time{color:#8b949e;font-size:12px;display:block;margin-bottom:4px}
-.empty{text-align:center;color:#8b949e;padding:26px}
-.og-thumb{width:100%;max-width:320px;border-radius:10px;border:1px solid #30363d;display:block;margin-top:8px}
-.video-thumb{width:96px;height:54px;object-fit:cover;border-radius:8px;border:1px solid #30363d;flex-shrink:0;background:#0d1117}
-.video-row-main{display:flex;gap:12px;align-items:flex-start}
-.upload-status{font-size:12.5px;margin-top:8px}
-.upload-status.uploading{color:#d29922}
-.upload-status.ok{color:#3fb950}
-.upload-status.fail{color:#ff7b72}
-pre.raw{background:#0d1117;border:1px solid #30363d;border-radius:10px;padding:14px;font-size:12px;white-space:pre-wrap;word-break:break-word;max-height:420px;overflow:auto}
-@media(max-width:650px){.row{grid-template-columns:1fr}.video{align-items:flex-start;flex-direction:column}.top{align-items:flex-start;flex-direction:column}}
+  :root{
+    --soil:#2a2117;
+    --cream:#f3ecda;
+    --cream-2:#eae1c9;
+    --leaf-deep:#3c6b2f;
+    --leaf-mid:#6b9a4c;
+    --sprout:#a9ce7c;
+    --sunflower:#e3a73e;
+    --clay:#b5623a;
+    --font-display:'Fraunces', serif;
+    --font-body:'Work Sans', sans-serif;
+    --font-mono:'Space Mono', monospace;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--soil);
+    font-family:var(--font-body);
+    line-height:1.55;
+  }
+
+  a{ color:inherit; }
+
+  /* ---------- header: seed-packet band ---------- */
+  header.packet{
+    background:var(--soil);
+    color:var(--cream);
+    padding:18px 20px 34px;
+    position:relative;
+    overflow:hidden;
+  }
+  header.packet::after{
+    content:'';
+    position:absolute;
+    left:0; right:0; bottom:0;
+    height:6px;
+    background:repeating-linear-gradient(90deg,var(--sunflower) 0 18px, var(--leaf-mid) 18px 36px);
+  }
+  .packet-inner{
+    max-width:1100px;
+    margin:0 auto;
+    text-align:center;
+  }
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:12px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--sprout);
+    margin:0 0 10px;
+  }
+  h1.site-title{
+    font-family:var(--font-display);
+    font-optical-sizing:auto;
+    font-weight:700;
+    font-size:clamp(34px,6vw,58px);
+    margin:0;
+    letter-spacing:-0.01em;
+  }
+  h1.site-title em{
+    font-style:italic;
+    font-weight:400;
+    color:var(--sunflower);
+  }
+  .tagline{
+    font-size:15px;
+    color:var(--cream-2);
+    max-width:520px;
+    margin:14px auto 0;
+  }
+
+  /* ---------- ad slot: top banner ---------- */
+  .ad-slot{
+    max-width:1100px;
+    margin:22px auto;
+    padding:0 20px;
+    text-align:center;
+  }
+  .ad-desktop{ display:block; }
+  .ad-mobile{ display:none; }
+  @media (max-width:760px){
+    .ad-desktop{ display:none; }
+    .ad-mobile{ display:block; }
+  }
+
+  /* ---------- main ---------- */
+  main{
+    max-width:1100px;
+    margin:0 auto;
+    padding:10px 20px 60px;
+  }
+
+  .intro{
+    text-align:center;
+    padding:26px 10px 6px;
+  }
+  .intro p{
+    max-width:560px;
+    margin:0 auto;
+    color:#4a4030;
+    font-size:15px;
+  }
+
+  /* ---------- petak tanam: grid 4 video per baris ---------- */
+  .plot-grid{
+    margin-top:26px;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:26px 18px;
+  }
+  @media (max-width:900px){
+    .plot-grid{ grid-template-columns:repeat(2,1fr); }
+  }
+  @media (max-width:520px){
+    .plot-grid{ grid-template-columns:1fr; }
+  }
+
+  .card{
+    background:#fffdf7;
+    border:1px solid #e4d9b8;
+    border-radius:3px;
+    padding:12px;
+    position:relative;
+    display:flex;
+    flex-direction:column;
+  }
+  .card.latest{ border-color:var(--sunflower); }
+  .badge-baru{
+    position:absolute;
+    top:-11px;
+    right:12px;
+    background:var(--sunflower);
+    color:var(--soil);
+    font-family:var(--font-mono);
+    font-size:9px;
+    font-weight:700;
+    letter-spacing:.06em;
+    padding:3px 8px;
+    border-radius:2px;
+    box-shadow:0 2px 0 var(--clay);
+    z-index:2;
+  }
+  .card-meta{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    font-family:var(--font-mono);
+    font-size:10px;
+    color:#8a7c58;
+    margin:10px 0 6px;
+    letter-spacing:.02em;
+    gap:6px;
+  }
+  .card-title{
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:16px;
+    margin:0 0 6px;
+    line-height:1.28;
+  }
+  .card-desc{
+    font-size:12.5px;
+    color:#4a4030;
+    margin:0;
+  }
+
+  .video-frame{
+    position:relative;
+    display:block;
+    width:100%;
+    padding-top:56.25%;
+    background:var(--soil);
+    border-radius:2px;
+    overflow:hidden;
+    cursor:pointer;
+  }
+  .video-frame iframe{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    border:0;
+  }
+  .video-thumb{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center center;
+  }
+  .video-frame .play-btn{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    width:46px;
+    height:46px;
+    border-radius:50%;
+    background:rgba(42,33,23,0.72);
+    border:2px solid var(--sunflower);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:background .15s ease, transform .15s ease;
+  }
+  .video-frame:hover .play-btn{
+    background:var(--clay);
+    transform:translate(-50%,-50%) scale(1.06);
+  }
+  .video-frame .play-btn svg{
+    width:16px;
+    height:16px;
+    fill:var(--cream);
+    margin-left:2px;
+  }
+
+  /* ---------- baris iklan di antara petak ---------- */
+  .ad-row{
+    grid-column:1 / -1;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:6px;
+    padding:14px 0;
+    border-top:1px dashed #d8cca6;
+    border-bottom:1px dashed #d8cca6;
+  }
+  .ad-row .ad-label{
+    font-family:var(--font-mono);
+    font-size:9px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:#a89a72;
+  }
+  .ad-row iframe{ border:0; }
+
+  /* ---------- empty state ---------- */
+  .empty{
+    grid-column:1 / -1;
+    text-align:center;
+    padding:40px 20px;
+    color:#8a7c58;
+    font-family:var(--font-mono);
+    font-size:13px;
+    border:1px dashed #c9bd9c;
+    border-radius:3px;
+  }
+
+  /* ---------- footer ---------- */
+  footer{
+    background:var(--soil);
+    color:var(--cream-2);
+    padding:36px 20px 90px;
+    text-align:center;
+    font-size:13px;
+  }
+  footer .foot-title{
+    font-family:var(--font-display);
+    font-size:20px;
+    color:var(--cream);
+    margin-bottom:6px;
+  }
+  .smartlink-slot{
+    margin-top:18px;
+    font-family:var(--font-mono);
+    font-size:11px;
+    color:#8a9a72;
+    border-top:1px dashed #4a4030;
+    padding-top:16px;
+  }
+
+  /* ---------- socialbar fixed slot ---------- */
+  #socialbar-slot{
+    position:fixed;
+    left:0; right:0; bottom:0;
+    z-index:999;
+  }
 </style>
 </head>
 <body>
-<div class="app">
 
-<header class="top">
-  <div>
-    <div class="logo">⚙️ Repo<span>Pilot</span> AI</div>
-    <div class="sub">AI Programmer pribadi untuk mengelola beberapa repo</div>
-  </div>
-  <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
-    <select id="projectSelect" style="width:auto;padding:8px 10px">
-      <option value="indonesia">🌱 indonesia</option>
-      <option value="papua">🌏 papua</option>
-    </select>
-    <div class="status connecting" id="statusBadge">● Connecting...</div>
+<header class="packet">
+  <div class="packet-inner">
+    <p class="eyebrow">Catatan Video &middot; Episode Berkebun</p>
+    <h1 class="site-title">Video <em>Bercocok Tanam</em></h1>
+    <p class="tagline">Dari bibit sampai panen — kumpulan video berkebun, ditanam satu episode setiap kali.</p>
   </div>
 </header>
 
-<nav class="nav">
-<button class="active" data-page="home">🏠 Home</button>
-<button data-page="videos">📺 Video Manager</button>
-<button data-page="ai">🤖 AI Programmer</button>
-<button data-page="repo">📁 Repository</button>
-</nav>
-
-<main>
-
-<div id="globalMsg" class="msg hidden"></div>
-
-<!-- HOME -->
-<section id="home" class="page">
-  <div class="panel">
-    <h1>RepoPilot AI</h1>
-    <p class="muted">Kelola website GitHub langsung dari browser — pilih proyek di pojok kanan atas.</p>
-    <div class="grid">
-      <div class="stat">Repository<b id="homeRepoName">-</b><span class="muted">viral18plus</span></div>
-      <div class="stat">Video<b id="count">0</b><span class="muted">dari videos.json (GitHub)</span></div>
-      <div class="stat">Adsterra<b>🔒 Protected</b><span class="muted">tidak disentuh otomatis</span></div>
-    </div>
-  </div>
-  <div class="panel">
-    <h2>Alur kerja</h2>
-    <p>Tambah/edit data → Preview perubahan → Setujui secara lokal → tinjau Diff penuh → Simpan (commit) ke GitHub.</p>
-    <div class="protect"><b>🔐 Adsterra Protection</b><br><span class="muted">RepoPilot hanya membaca dan menulis <code>videos.json</code>. Bagian iklan/Adsterra tidak pernah disentuh.</span></div>
-  </div>
-</section>
-
-<!-- VIDEO MANAGER -->
-<section id="videos" class="page hidden">
-  <div class="panel">
-    <div style="display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap">
-      <div><h2>📺 Video Manager</h2><p class="muted">Kelola judul, Drive ID, tanggal, dan deskripsi video.</p></div>
-    </div>
-    <div class="toolbar">
-      <button class="secondary" onclick="reloadFromGitHub()">🔄 Muat Ulang dari GitHub</button>
-      <button class="primary" onclick="showForm()">＋ Tambah Video</button>
-      <button class="purple" onclick="repairAllOgImages()">🛠️ Repair All OG Images</button>
-      <button class="blue" id="saveGithubBtn" onclick="openSaveConfirm()" disabled>💾 Simpan ke GitHub<span class="badge-count" id="unsavedCount">0</span></button>
-    </div>
-  </div>
-
-  <div class="panel" id="formPanel" style="display:none">
-    <h2 id="formTitle">Tambah Video</h2>
-    <form id="videoForm">
-      <input type="hidden" id="editIndex">
-      <label>Judul Video<input id="judul" required></label>
-      <div class="row">
-        <label>Google Drive ID<input id="driveId" required></label>
-        <label>Tanggal<input id="tanggal" type="date" required></label>
-      </div>
-      <label>Deskripsi<textarea id="deskripsi" placeholder="Tulis deskripsi video..."></textarea></label>
-      <label>Gambar OG (cover) — opsional, isi Judul dulu (nama file mengikuti slug judul)
-        <input id="ogImageFile" type="file" accept="image/*" onchange="handleOgImageSelect(event)">
-      </label>
-      <input type="hidden" id="ogImage">
-      <div id="ogImageUploadStatus" class="upload-status hidden"></div>
-      <img id="ogImagePreview" class="og-thumb hidden" alt="Preview gambar OG">
-      <div class="actions">
-        <button type="submit" class="primary" id="submitVideoBtn">Preview Perubahan</button>
-        <button type="button" class="secondary" onclick="hideForm()">Batal</button>
-      </div>
-    </form>
-  </div>
-
-  <div class="panel hidden" id="diffPanel">
-    <h2>👀 Preview Perubahan</h2>
-    <div class="diff" id="diff"></div>
-    <br>
-    <div class="protect">🔒 Pemeriksaan Adsterra: perubahan ini hanya menyentuh <code>videos.json</code>.</div>
-    <br>
-    <div class="actions">
-      <button class="danger" onclick="cancelChange()">Tolak</button>
-      <button class="primary" onclick="applyChange()">Setujui Perubahan (lokal)</button>
-    </div>
-  </div>
-
-  <div class="panel hidden" id="commitConfirmPanel">
-    <h2>🧾 Konfirmasi Commit ke GitHub</h2>
-    <p class="muted">Berikut seluruh perubahan yang belum disimpan, dibandingkan dengan data terakhir di GitHub:</p>
-    <div class="diff" id="commitDiff"></div>
-    <br>
-    <div class="actions">
-      <button class="danger" onclick="closeSaveConfirm()">Batal</button>
-      <button class="primary" onclick="confirmSaveToGitHub()">✅ Commit Sekarang</button>
-    </div>
-  </div>
-
-  <div class="panel">
-    <div id="videoList"><div class="empty">Memuat videos.json dari GitHub...</div></div>
-  </div>
-</section>
-
-<!-- AI PROGRAMMER -->
-<section id="ai" class="page hidden">
-  <div class="panel">
-    <h2>🤖 AI Programmer</h2>
-    <p class="muted">Gunakan Gemini untuk membantu membuat judul, deskripsi, atau memahami repository.</p>
-
-    <label>Pilih video (opsional)
-      <select id="aiVideoSelect">
-        <option value="-1">Tidak memilih video</option>
-      </select>
-    </label>
-    <br>
-    <label>Perintah untuk Gemini
-      <textarea id="aiPrompt" placeholder="Contoh: Buatkan deskripsi menarik untuk video ini dalam bahasa Indonesia."></textarea>
-    </label>
-    <br>
-    <div class="actions">
-      <button class="purple" onclick="generateAI()">✨ Generate dengan Gemini</button>
-      <button class="secondary" onclick="clearAI()">Bersihkan</button>
-    </div>
-
-    <div id="aiResult" class="diff" style="margin-top:14px">Hasil Gemini akan muncul di sini.</div>
-
-    <div class="actions" style="margin-top:12px">
-      <button class="blue" onclick="useAIResultAsDescription()">📋 Gunakan sebagai Deskripsi</button>
-      <button class="blue" onclick="useAIResultAsTitle()">🏷️ Gunakan sebagai Judul</button>
-    </div>
-    <p class="muted" style="margin-top:10px">Hasil yang digunakan hanya berlaku lokal — tekan <b>Simpan ke GitHub</b> di tab Video Manager untuk menerapkannya.</p>
-  </div>
-</section>
-
-<!-- REPOSITORY -->
-<section id="repo" class="page hidden">
-  <div class="panel">
-    <h2>📁 Repository</h2>
-    <p><b>Repository:</b> <span id="repoFullName">-</span></p>
-    <p><b>Branch:</b> <span id="repoBranchText">-</span> &nbsp;•&nbsp; <b>File:</b> <span id="repoFileText">-</span></p>
-    <p><b>Pages:</b> <a id="repoPagesLink" href="#" target="_blank" rel="noopener" style="color:#58a6ff">-</a></p>
-    <p><b>Status:</b> <span id="repoStatusText" class="muted">menghubungkan...</span></p>
-    <div class="actions">
-      <button class="secondary" onclick="toggleRawJSON()">👁️ Lihat / Sembunyikan JSON mentah</button>
-    </div>
-    <pre class="raw hidden" id="rawJSON"></pre>
-  </div>
-
-  <div class="panel">
-    <h2>🧾 Commit Manager</h2>
-    <p class="muted">Riwayat commit yang dikirim ke GitHub pada sesi ini.</p>
-    <div id="commitLog"><div class="empty">Belum ada commit pada sesi ini.</div></div>
-  </div>
-</section>
-
-</main>
+<!-- IKLAN ADSTERRA — BANNER 728x90 (desktop) / 320x50 (mobile) -->
+<div class="ad-slot">
+  <div class="ad-desktop" id="ad-top-728x90"></div>
+  <div class="ad-mobile" id="ad-top-320x50"></div>
 </div>
 
+<main>
+  <div class="intro">
+    <p>Video ditanam 4 dalam satu bedengan. Video terbaru selalu ada di bedengan paling atas.</p>
+  </div>
+
+  <div class="plot-grid" id="feed"></div>
+</main>
+
+<footer>
+  <p class="foot-title">Video Bercocok Tanam</p>
+  <p>Semua video ditayangkan lewat Google Drive. Episode baru menyusul setiap minggu.</p>
+  <div class="smartlink-slot">
+    <a href="https://www.effectivecpmnetwork.com/yy4859522?key=65ec0f228256a2f19b9ebf23b56a5c26" target="_blank" rel="nofollow noopener">Rekomendasi untuk kamu</a>
+  </div>
+</footer>
+
+<!-- IKLAN ADSTERRA — SOCIAL BAR -->
+<div id="socialbar-slot"></div>
+<script src="https://pl30819271.effectivecpmnetwork.com/f0/e7/cf/f0e7cf41b81e26d2fe4e28a0dc6998d4.js"></script>
+
 <script>
-/* ===================== CONFIG ===================== */
-const API_URL = "https://repopilot-api.elableken-6a1.workers.dev";
-const GITHUB_OWNER = "viral18plus";
-const REPOSITORIES = {
-  indonesia: "indonesia",
-  papua: "papua"
-};
+  /* =====================================================================
+     DAFTAR VIDEO
+     Daftar video TIDAK lagi ditulis di sini. Halaman ini otomatis
+     mengambil (fetch) isi videos.json setiap kali dibuka, jadi cukup
+     edit videos.json untuk menambah video baru — file ini (index.html)
+     tidak perlu diupload ulang.
+     ===================================================================== */
 
-function buildOgImage(repo, slug){
-  const target = REPOSITORIES[repo];
-  if(!target) throw new Error("Repository target tidak valid: " + repo);
-  return `https://${GITHUB_OWNER}.github.io/${target}/covers/${slug}.jpg`;
-}
-
-function repairOgUrls(videos, repo){
-  const target = REPOSITORIES[repo];
-  if(!target) throw new Error("Repository target tidak valid: " + repo);
-  const base = `https://${GITHUB_OWNER}.github.io/${target}/covers/`;
-  const oldBases = [
-    "https://bercocoktanam2k26.github.io/kebun-indonesia/covers/",
-    "https://bercocoktanam2k26.github.io/kebun-papua/covers/"
-  ];
-  return videos.map(v => {
-    const copy = {...v};
-    if(copy.ogImage){
-      oldBases.forEach(oldBase => {
-        copy.ogImage = copy.ogImage.replace(oldBase, base);
-      });
-      // Legacy GitHub/raw URL atau domain lain yang bukan Pages target
-      // dipetakan ulang berdasarkan slug judul agar Repair benar-benar permanen.
-      if(!copy.ogImage.startsWith(base)){
-        copy.ogImage = buildOgImage(repo, slugify(copy.judul));
-      }
-    } else if(copy.judul){
-      copy.ogImage = buildOgImage(repo, slugify(copy.judul));
-    }
-    return copy;
-  });
-}
-
-function validateOgUrls(videos, repo){
-  const target = REPOSITORIES[repo];
-  const expectedPrefix = `https://${GITHUB_OWNER}.github.io/${target}/covers/`;
-  const invalid = videos.filter(v => v.ogImage && !v.ogImage.startsWith(expectedPrefix));
-  if(invalid.length){
-    const names = invalid.slice(0,5).map(v => v.judul).join(", ");
-    throw new Error(`Validasi OG Image gagal untuk ${invalid.length} video. URL harus berada di ${expectedPrefix}. Contoh: ${names}`);
-  }
-}
-
-function downloadVideosBackup(data, repo){
-  const now = new Date();
-  const pad = n => String(n).padStart(2,"0");
-  const filename = `videos-backup-${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}.json`;
-  const blob = new Blob([JSON.stringify(data,null,2)], {type:"application/json;charset=utf-8"});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = filename;
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 1000);
-}
-
-/* ===================== STATE ===================== */
-let videos = [];       // working copy (may include unsaved local edits)
-let savedVideos = [];  // last known state confirmed on GitHub
-let pendingCandidate = null; // candidate full array while single-item diff is open
-let commitLog = [];
-let selectedAIIndex = -1;
-let currentProject = "indonesia";
-
-const $ = id => document.getElementById(id);
-
-/* ===================== HELPERS ===================== */
-function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
-
-function showMsg(text, type = "success"){
-  const box = $("globalMsg");
-  box.innerHTML = text;
-  box.className = "msg " + type;
-  box.classList.remove("hidden");
-}
-
-function setStatus(state){
-  const el = $("statusBadge");
-  const repoText = $("repoStatusText");
-  el.className = "status " + state;
-  if(state === "connecting"){ el.textContent = "● Connecting..."; if(repoText) repoText.textContent = "Menghubungkan ke GitHub..."; }
-  else if(state === "connected"){ el.textContent = "● Connected"; if(repoText) repoText.textContent = "Terhubung ke GitHub."; }
-  else { el.textContent = "● Offline"; if(repoText) repoText.textContent = "Tidak terhubung. Periksa koneksi atau Worker."; }
-}
-
-function computeDiff(oldArr, newArr){
-  const key = (v,i) => v.driveId ? ("id:" + v.driveId) : ("idx:" + i);
-  const oldMap = new Map(oldArr.map((v,i)=>[key(v,i), v]));
-  const newMap = new Map(newArr.map((v,i)=>[key(v,i), v]));
-  const added = [], removed = [], changed = [];
-  newMap.forEach((v,k) => { if(!oldMap.has(k)) added.push(v); });
-  oldMap.forEach((v,k) => { if(!newMap.has(k)) removed.push(v); });
-  newMap.forEach((v,k) => {
-    if(oldMap.has(k)){
-      const ov = oldMap.get(k);
-      if(JSON.stringify(ov) !== JSON.stringify(v)) changed.push({before: ov, after: v});
-    }
-  });
-  return {added, removed, changed};
-}
-
-function diffHasChanges(d){ return d.added.length || d.removed.length || d.changed.length; }
-
-function renderDiffHTML(d){
-  let html = "";
-  d.added.forEach(v => html += `<span class="add">+ TAMBAH: ${esc(v.judul)} (${esc(v.driveId)})</span>\n`);
-  d.removed.forEach(v => html += `<span class="remove">- HAPUS: ${esc(v.judul)} (${esc(v.driveId)})</span>\n`);
-  d.changed.forEach(c => html += `<span class="change">~ UBAH: ${esc(c.after.judul)}</span>\n${esc(JSON.stringify(c.before,null,2))}\n→\n${esc(JSON.stringify(c.after,null,2))}\n`);
-  if(!html) html = '<span class="muted">Tidak ada perubahan.</span>';
-  return html;
-}
-
-/* ===================== LOAD FROM GITHUB ===================== */
-async function loadVideos(){
-  setStatus("connecting");
-  showMsg("Sedang membaca videos.json dari GitHub...", "warning");
-  try{
-    const response = await fetch(API_URL + "/github?project=" + encodeURIComponent(currentProject));
-    const data = await response.json();
-    if(!data.success) throw new Error(data.error || "Gagal membaca repository.");
-    if(!Array.isArray(data.videos)) throw new Error("Format videos.json tidak valid.");
-
-    videos = data.videos.map(v => ({
-      judul: String(v.judul || ""),
-      driveId: String(v.driveId || ""),
-      tanggal: String(v.tanggal || ""),
-      deskripsi: String(v.deskripsi || ""),
-      ogImage: String(v.ogImage || "")
-    }));
-    // Normalisasi URL OG legacy secara lokal saat memuat data.
-    // Ini memastikan video lama yang masih memakai URL lama tidak
-    // membuat upload video baru gagal validasi. Perubahan repair
-    // tetap lokal sampai pengguna menekan Simpan ke GitHub.
-    const normalizedVideos = repairOgUrls(videos, currentProject);
-    videos = normalizedVideos;
-    savedVideos = JSON.parse(JSON.stringify(data.videos));
-
-    updateRepoInfo(data.repository, data.file);
-    setStatus("connected");
-    showMsg(`✅ Berhasil memuat ${videos.length} video dari GitHub (${data.repository}).`, "success");
-    renderAll();
-  }catch(err){
-    setStatus("offline");
-    showMsg("❌ " + err.message, "error");
-    videos = [];
-    renderAll();
-  }
-}
-
-function updateRepoInfo(repository, file){
-  const parts = String(repository || "").split("/");
-  const owner = parts[0];
-  const name = parts[1];
-  $("repoFullName").textContent = repository || "-";
-  $("repoBranchText").textContent = "main";
-  $("repoFileText").textContent = file || "videos.json";
-  $("homeRepoName").textContent = name || currentProject;
-  if(owner && name){
-    const pagesUrl = `https://${owner}.github.io/${name}/`;
-    $("repoPagesLink").href = pagesUrl;
-    $("repoPagesLink").textContent = pagesUrl.replace("https://", "");
-  }
-}
-
-function reloadFromGitHub(){
-  const diff = computeDiff(savedVideos, videos);
-  if(diffHasChanges(diff)){
-    if(!confirm("Ada perubahan lokal yang belum disimpan ke GitHub. Muat ulang akan membuang perubahan tersebut. Lanjutkan?")) return;
-  }
-  loadVideos();
-}
-
-/* ===================== RENDER ===================== */
-function renderAll(){
-  $("count").textContent = videos.length;
-  renderVideoList();
-  updateAISelect();
-  updateUnsavedBadge();
-  refreshRawJSON();
-}
-
-function getCover(video){
-  if(video && video.ogImage) return video.ogImage;
-  if(video && video.judul) return buildOgImage(currentProject, slugify(video.judul));
-  return "";
-}
-
-function renderVideoList(){
-  const list = $("videoList");
-  if(videos.length === 0){
-    list.innerHTML = `<div class="empty">Belum ada video, atau belum terhubung ke GitHub.</div>`;
-    return;
-  }
-  list.innerHTML = videos.map((v,i) => `
-    <div class="video">
-      <div class="video-row-main">
-        ${getCover(v)
-          ? `<img class="video-thumb" src="${esc(getCover(v))}" alt="OG image ${esc(v.judul)}">`
-          : `<div class="video-thumb" style="display:flex;align-items:center;justify-content:center;color:#8b949e;font-size:10px;text-align:center">Tanpa gambar OG</div>`}
-        <div>
-          <h3>${esc(v.judul)}</h3>
-          <span class="muted">${esc(v.tanggal)} · Drive: ${esc(v.driveId)}</span><br>
-          <span class="muted">${esc(v.deskripsi || "Tanpa deskripsi")}</span>
-        </div>
-      </div>
-      <div class="actions">
-        <button class="secondary" onclick="editVideo(${i})">✏️ Edit</button>
-        <button class="danger" onclick="deleteVideo(${i})">🗑️ Hapus</button>
-      </div>
-    </div>
-  `).join("");
-}
-
-function updateAISelect(){
-  const select = $("aiVideoSelect");
-  select.innerHTML = `<option value="-1">Tidak memilih video</option>` +
-    videos.map((v,i) => `<option value="${i}">${i+1}. ${esc(v.judul)}</option>`).join("");
-}
-
-function updateUnsavedBadge(){
-  const diff = computeDiff(savedVideos, videos);
-  const count = diff.added.length + diff.removed.length + diff.changed.length;
-  $("unsavedCount").textContent = count;
-  $("saveGithubBtn").disabled = count === 0;
-}
-
-function refreshRawJSON(){
-  $("rawJSON").textContent = JSON.stringify(videos, null, 2);
-}
-
-function toggleRawJSON(){
-  $("rawJSON").classList.toggle("hidden");
-}
-
-/* ===================== ADD / EDIT FORM ===================== */
-function showForm(i = null){
-  $("formPanel").style.display = "block";
-  $("formTitle").textContent = i === null ? "Tambah Video" : "Edit Video";
-  $("editIndex").value = i ?? "";
-  $("ogImageUploadStatus").className = "upload-status hidden";
-  $("ogImageFile").value = "";
-  if(i !== null){
-    const v = videos[i];
-    $("judul").value = v.judul;
-    $("driveId").value = v.driveId;
-    $("tanggal").value = v.tanggal;
-    $("deskripsi").value = v.deskripsi;
-    $("ogImage").value = v.ogImage || "";
-    if(v.ogImage){
-      $("ogImagePreview").src = v.ogImage;
-      $("ogImagePreview").classList.remove("hidden");
-    } else {
-      $("ogImagePreview").classList.add("hidden");
-    }
-  } else {
-    $("videoForm").reset();
-    $("ogImage").value = "";
-    $("ogImagePreview").classList.add("hidden");
-  }
-  window.scrollTo({top:0, behavior:"smooth"});
-}
-function hideForm(){ $("formPanel").style.display = "none"; }
-function editVideo(i){ showForm(i); }
-
-/* ===================== OG IMAGE: COMPRESS + UPLOAD ===================== */
-/*
- * Format cover per proyek — harus cocok dengan konvensi
- * file yang sudah ada di masing-masing repo.
- */
-const PROJECT_COVER_FORMAT = {
-  indonesia: "jpg",
-  papua: "jpg"
-};
-
-function getCoverFormat(project){
-  return PROJECT_COVER_FORMAT[project] || "jpg";
-}
-
-function getCoverExtension(url, project){
-  const match = String(url || "").match(/\.([a-z0-9]+)(?:[?#].*)?$/i);
-  return match ? match[1].toLowerCase() : getCoverFormat(project);
-}
-
-function compressImageFile(file, format = "jpg", maxWidth = 1200, maxHeight = 630, quality = 0.8){
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onerror = () => reject(new Error("Gagal membaca file gambar."));
-    reader.onload = () => {
-      const img = new Image();
-      img.onerror = () => reject(new Error("File bukan gambar yang valid."));
-      img.onload = () => {
-        let {width, height} = img;
-        const ratio = Math.min(maxWidth / width, maxHeight / height, 1);
-        width = Math.round(width * ratio);
-        height = Math.round(height * ratio);
-        const canvas = document.createElement("canvas");
-        canvas.width = width;
-        canvas.height = height;
-        const ctx = canvas.getContext("2d");
-        if(format === "png"){
-          // Pertahankan transparansi untuk PNG
-          ctx.drawImage(img, 0, 0, width, height);
-          resolve(canvas.toDataURL("image/png"));
-        } else {
-          ctx.fillStyle = "#ffffff";
-          ctx.fillRect(0, 0, width, height);
-          ctx.drawImage(img, 0, 0, width, height);
-          resolve(canvas.toDataURL("image/jpeg", quality));
-        }
-      };
-      img.src = reader.result;
-    };
-    reader.readAsDataURL(file);
-  });
-}
-
-function slugify(text){
-  return String(text)
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "")
-    .replace(/-{2,}/g, "-");
-}
-
-async function handleOgImageSelect(event){
-  const file = event.target.files[0];
-  if(!file) return;
-
-  const judul = $("judul").value.trim();
-  const statusEl = $("ogImageUploadStatus");
-  const previewEl = $("ogImagePreview");
-  const submitBtn = $("submitVideoBtn");
-
-  if(!judul){
-    statusEl.className = "upload-status fail";
-    statusEl.classList.remove("hidden");
-    statusEl.textContent = "❌ Isi Judul Video dulu sebelum upload gambar (nama file mengikuti slug judul).";
-    event.target.value = "";
-    return;
-  }
-
-  const slug = slugify(judul);
-  if(!slug){
-    statusEl.className = "upload-status fail";
-    statusEl.classList.remove("hidden");
-    statusEl.textContent = "❌ Judul tidak menghasilkan nama file yang valid, coba judul lain.";
-    event.target.value = "";
-    return;
-  }
-
-  statusEl.classList.remove("hidden");
-  statusEl.className = "upload-status uploading";
-  statusEl.textContent = "⏳ Mengompres gambar...";
-  submitBtn.disabled = true;
-
-  try{
-    const format = getCoverFormat(currentProject);
-    const dataUrl = await compressImageFile(file, format);
-    previewEl.src = dataUrl;
-    previewEl.classList.remove("hidden");
-
-    statusEl.textContent = `☁️ Mengunggah gambar ke ${currentProject}...`;
-
-    const response = await fetch(API_URL + "/upload-image", {
-      method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({
-        project: currentProject,
-        imageBase64: dataUrl,
-        filename: `${slug}.${format}`
-      })
-    });
-    const data = await response.json();
-    if(!data.success) throw new Error(data.error || "Gagal mengunggah gambar.");
-
-    // Worker boleh mengembalikan URL file GitHub/raw; URL OG publik
-    // harus selalu dibentuk secara terpusat dari Pages domain.
-    const publicOgUrl = buildOgImage(currentProject, slug);
-    $("ogImage").value = publicOgUrl;
-    previewEl.src = data.url || publicOgUrl;
-    statusEl.className = "upload-status ok";
-    statusEl.textContent = `✅ Gambar berhasil diunggah sebagai covers/${slug}.${format}`;
-  }catch(err){
-    statusEl.className = "upload-status fail";
-    statusEl.textContent = "❌ " + err.message;
-    $("ogImage").value = "";
-  }finally{
-    submitBtn.disabled = false;
-  }
-}
-
-function deleteVideo(i){
-  const v = videos[i];
-  if(!confirm(`Hapus "${v.judul}"? Perubahan baru berlaku lokal sampai kamu menekan Simpan ke GitHub.`)) return;
-  videos = videos.slice();
-  videos.splice(i, 1);
-  renderAll();
-  showMsg("Video dihapus dari editor. Tekan Simpan ke GitHub untuk menerapkan perubahan.", "warning");
-}
-
-$("videoForm").onsubmit = async e => {
-  e.preventDefault();
-
-  const submitBtn = $("submitVideoBtn");
-  const i = $("editIndex").value;
-  const originalVideo = i !== "" ? videos[Number(i)] : null;
-  const newJudul = $("judul").value.trim();
-  let ogImage = $("ogImage").value.trim();
-
-  /*
-   * Kalau ini edit video, judulnya berubah, dan gambar OG
-   * TIDAK diganti baru (masih URL lama) — nama file cover
-   * di GitHub perlu disesuaikan (rename) supaya tetap
-   * sinkron dengan slug judul baru, karena generate.py di
-   * situs mencari file berdasarkan slug judul.
-   */
-  if(originalVideo && originalVideo.ogImage && ogImage === originalVideo.ogImage){
-    const oldSlug = slugify(originalVideo.judul);
-    const newSlug = slugify(newJudul);
-    if(oldSlug && newSlug && oldSlug !== newSlug){
-      submitBtn.disabled = true;
-      showMsg("🔄 Menyesuaikan nama file gambar OG dengan judul baru...", "warning");
-      try{
-        const response = await fetch(API_URL + "/rename-image", {
-          method: "POST",
-          headers: {"Content-Type": "application/json"},
-          body: JSON.stringify({
-            project: currentProject,
-            oldPath: `covers/${oldSlug}.${getCoverExtension(originalVideo.ogImage, currentProject)}`,
-            newPath: `covers/${newSlug}.${getCoverExtension(originalVideo.ogImage, currentProject)}`
-          })
-        });
-        const data = await response.json();
-        if(data.success){
-          ogImage = data.url;
-          showMsg("✅ Nama file gambar OG berhasil disesuaikan dengan judul baru.", "success");
-        } else {
-          showMsg("⚠️ Gagal menyesuaikan nama file gambar OG: " + (data.error || "tidak diketahui") + ". Judul tetap disimpan, tapi kamu mungkin perlu upload ulang gambarnya.", "warning");
-        }
-      }catch(err){
-        showMsg("⚠️ Gagal menyesuaikan nama file gambar OG: " + err.message, "warning");
-      }finally{
-        submitBtn.disabled = false;
-      }
-    }
-  }
-
-  const value = {
-    judul: newJudul,
-    driveId: $("driveId").value.trim(),
-    tanggal: $("tanggal").value,
-    deskripsi: $("deskripsi").value.trim(),
-    ogImage: ogImage || buildOgImage(currentProject, slugify(newJudul))
+  /* =====================================================================
+     KONFIGURASI IKLAN — berdasarkan data revenue Adsterra nyata.
+     Ubah true/false untuk menyalakan/mematikan satu jenis iklan.
+     ===================================================================== */
+  const AD_CONFIG = {
+    topBanner: true,          // 728x90 desktop / 320x50 mobile di bagian atas
+    inContentRotation: true   // baris iklan di antara video
   };
-  const candidate = videos.slice();
-  if(i === ""){
-    candidate.unshift(value);
-  } else {
-    candidate[Number(i)] = value;
-  }
-  pendingCandidate = candidate;
-  const diff = computeDiff(videos, candidate);
-  $("diff").innerHTML = renderDiffHTML(diff);
-  $("diffPanel").classList.remove("hidden");
-  hideForm();
-  $("diffPanel").scrollIntoView({behavior:"smooth"});
-};
 
-function applyChange(){
-  if(!pendingCandidate) return;
-  videos = pendingCandidate;
-  pendingCandidate = null;
-  $("diffPanel").classList.add("hidden");
-  renderAll();
-  showMsg("Perubahan diterapkan secara lokal. Tekan Simpan ke GitHub untuk menerapkannya di repository.", "warning");
-}
-function cancelChange(){
-  pendingCandidate = null;
-  $("diffPanel").classList.add("hidden");
-}
+  // Urutan & pengulangan menentukan FREKUENSI kemunculan tiap ukuran.
+  // 320x50, 300x250, Native diulang lebih banyak (revenue/CPM terbaik).
+  // 160x300 / 160x600 / 468x60 tetap aktif tapi ditaruh paling jarang
+  // (revenue sangat rendah berdasarkan data, tapi tidak dihapus).
+  const ROTATION_POOL = [
+    { type:'banner', key:'31ecdbf5858a594406627c7268f204d3', width:320, height:50 },
+    { type:'banner', key:'31ecdbf5858a594406627c7268f204d3', width:320, height:50 },
+    { type:'banner', key:'31ecdbf5858a594406627c7268f204d3', width:320, height:50 },
+    { type:'banner', key:'4d27f935deba9bc05166c12b06b00c42', width:300, height:250 },
+    { type:'banner', key:'4d27f935deba9bc05166c12b06b00c42', width:300, height:250 },
+    { type:'native', key:'bb545ebcedb7e3fde88a08926f7600ff' },
+    { type:'native', key:'bb545ebcedb7e3fde88a08926f7600ff' },
+    { type:'banner', key:'a43bb6b4655190fce3e4a83e3a6f8096', width:160, height:300 },
+    { type:'banner', key:'07dd379c65a286df957d7db39551703c', width:160, height:600 },
+    { type:'banner', key:'8c6e050c99eec8e0783e1d332b9cdedf', width:468, height:60  }
+  ];
 
-/* ===================== REPAIR ALL OG IMAGES ===================== */
-async function repairAllOgImages(){
-  if(!Array.isArray(videos) || !videos.length){
-    showMsg("Tidak ada videos.json yang bisa diperbaiki.", "warning");
-    return;
-  }
-  const repaired = repairOgUrls(videos, currentProject);
-  const changed = computeDiff(videos, repaired);
-  if(!diffHasChanges(changed)){
-    showMsg("✅ Semua URL OG Image yang terisi sudah menggunakan domain baru.", "success");
-    return;
-  }
-  const invalid = repaired.filter(v => v.ogImage && !v.ogImage.startsWith(`https://${GITHUB_OWNER}.github.io/${REPOSITORIES[currentProject]}/covers/`));
-  if(invalid.length){
-    showMsg("❌ Repair menghasilkan URL OG yang tidak valid. Publish dibatalkan.", "error");
-    return;
-  }
-  if(!confirm(`Perbaiki ${changed.changed.length + changed.added.length} perubahan OG Image di ${currentProject} dan simpan ke GitHub sekarang?\n\nBackup videos.json akan diunduh terlebih dahulu.`)) return;
-  try{
-    validateOgUrls(repaired, currentProject);
-    downloadVideosBackup(savedVideos, currentProject);
-    showMsg("🔧 Memperbaiki URL OG Image dan menyimpan ke GitHub...", "warning");
-    const response = await fetch(API_URL + "/update-videos", {
-      method: "POST",
-      headers: {"Content-Type":"application/json"},
-      body: JSON.stringify({project: currentProject, videos: repaired, message: "Repair OG Image URLs via RepoPilot"})
-    });
-    const data = await response.json();
-    if(!data.success) throw new Error(data.error || "GitHub gagal menyimpan hasil repair.");
-    videos = repaired;
-    savedVideos = JSON.parse(JSON.stringify(repaired));
-    renderAll();
-    addCommitLog(data.commitUrl);
-    showMsg("✅ Semua URL OG Image lama berhasil diperbaiki dan videos.json disimpan ke GitHub." + (data.commitUrl ? `<br><br><a href="${esc(data.commitUrl)}" target="_blank" rel="noopener">🔗 Lihat Commit GitHub</a>` : ""), "success");
-    await loadVideos();
-  }catch(err){
-    showMsg("❌ " + err.message, "error");
-  }finally{
-    updateUnsavedBadge();
-  }
-}
-
-/* ===================== SAVE TO GITHUB (COMMIT MANAGER) ===================== */
-function openSaveConfirm(){
-  const diff = computeDiff(savedVideos, videos);
-  if(!diffHasChanges(diff)){
-    showMsg("Tidak ada perubahan untuk disimpan.", "warning");
-    return;
-  }
-  $("commitDiff").innerHTML = renderDiffHTML(diff);
-  $("commitConfirmPanel").classList.remove("hidden");
-  $("commitConfirmPanel").scrollIntoView({behavior:"smooth"});
-}
-function closeSaveConfirm(){
-  $("commitConfirmPanel").classList.add("hidden");
-}
-
-async function confirmSaveToGitHub(){
-  if(!Array.isArray(videos)){
-    showMsg("Data video tidak valid.", "error");
-    return;
-  }
-  try{
-    // Normalisasi semua URL legacy/missing berdasarkan repository + slug
-    // sebelum validasi. URL lama tidak boleh lolos ke GitHub.
-    videos = repairOgUrls(videos, currentProject);
-    validateOgUrls(videos, currentProject);
-    downloadVideosBackup(savedVideos, currentProject);
-    showMsg("💾 Backup videos.json dibuat. Sedang menyimpan ke GitHub...", "warning");
-    $("saveGithubBtn").disabled = true;
-
-    const response = await fetch(API_URL + "/update-videos", {
-      method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({project: currentProject, videos, message: "Update videos.json via RepoPilot"})
-    });
-    const data = await response.json();
-    if(!data.success) throw new Error(data.error || "GitHub gagal menyimpan.");
-
-    showMsg("✅ videos.json berhasil disimpan ke GitHub!" + (data.commitUrl ? `<br><br><a href="${esc(data.commitUrl)}" target="_blank" rel="noopener">🔗 Lihat Commit GitHub</a>` : ""), "success");
-    addCommitLog(data.commitUrl);
-    savedVideos = JSON.parse(JSON.stringify(videos));
-    closeSaveConfirm();
-    updateUnsavedBadge();
-
-    // Ambil ulang data terbaru dari GitHub untuk memastikan konsistensi
-    await loadVideos();
-  }catch(err){
-    showMsg("❌ " + err.message, "error");
-  }finally{
-    updateUnsavedBadge();
-  }
-}
-
-function addCommitLog(url){
-  commitLog.unshift({
-    time: new Date().toLocaleString("id-ID"),
-    url: url || null,
-    count: videos.length
-  });
-  renderCommitLog();
-}
-function renderCommitLog(){
-  const box = $("commitLog");
-  if(commitLog.length === 0){
-    box.innerHTML = `<div class="empty">Belum ada commit pada sesi ini.</div>`;
-    return;
-  }
-  box.innerHTML = commitLog.map(c => `
-    <div class="commit-item">
-      <span class="time">${esc(c.time)} · ${c.count} video</span>
-      ${c.url ? `<a href="${esc(c.url)}" target="_blank" rel="noopener" style="color:#58a6ff">🔗 Lihat Commit GitHub</a>` : `<span class="muted">Commit berhasil, tautan tidak tersedia.</span>`}
-    </div>
-  `).join("");
-}
-
-/* ===================== AI PROGRAMMER (GEMINI) ===================== */
-$("aiVideoSelect").addEventListener("change", function(){
-  selectedAIIndex = Number(this.value);
-});
-
-async function generateAI(){
-  const promptEl = $("aiPrompt");
-  const resultEl = $("aiResult");
-  const prompt = promptEl.value.trim();
-
-  if(!prompt){
-    alert("Tulis permintaan untuk Gemini terlebih dahulu.");
-    return;
+  // Menulis iklan banner (format atOptions) ke dalam iframe terpisah,
+  // supaya aman dipasang secara dinamis lewat JavaScript.
+  function renderBannerAd(container, ad){
+    const iframe = document.createElement('iframe');
+    iframe.style.width = ad.width + 'px';
+    iframe.style.height = ad.height + 'px';
+    iframe.style.maxWidth = '100%';
+    iframe.scrolling = 'no';
+    container.appendChild(iframe);
+    const doc = iframe.contentWindow.document;
+    doc.open();
+    doc.write(
+      '<script>atOptions={"key":"' + ad.key + '","format":"iframe","height":' + ad.height + ',"width":' + ad.width + ',"params":{}};<\/script>' +
+      '<script src="https://www.highperformanceformat.com/' + ad.key + '/invoke.js"><\/script>'
+    );
+    doc.close();
   }
 
-  selectedAIIndex = Number($("aiVideoSelect").value);
-  let videoContext = "";
-  if(selectedAIIndex >= 0 && selectedAIIndex < videos.length){
-    const v = videos[selectedAIIndex];
-    videoContext = `\nVideo yang sedang dipilih:\nJudul: ${v.judul}\nGoogle Drive ID: ${v.driveId}\nTanggal: ${v.tanggal}\nDeskripsi: ${v.deskripsi}\n`;
+  // Native banner dipasang langsung ke DOM (bukan lewat document.write)
+  // supaya tampilannya mengikuti gaya halaman.
+  function renderNativeAd(container, ad){
+    const holder = document.createElement('div');
+    holder.id = 'container-' + ad.key;
+    container.appendChild(holder);
+    const script = document.createElement('script');
+    script.async = true;
+    script.setAttribute('data-cfasync', 'false');
+    script.src = 'https://pl30819270.effectivecpmnetwork.com/' + ad.key + '/invoke.js';
+    container.appendChild(script);
   }
 
-  const finalPrompt = `Kamu adalah RepoPilot AI Programmer.\nBantu pengguna mengelola repository:\nviral18plus/${currentProject}\n\nFile utama: videos.json\nStruktur data:\n[\n  {\n    "judul": "...",\n    "driveId": "...",\n    "tanggal": "...",\n    "deskripsi": "...",\n    "ogImage": "..."\n  }\n]\n${videoContext}\nPermintaan pengguna:\n${prompt}\n\nBerikan jawaban yang siap digunakan.\nJika pengguna meminta judul, berikan hanya judul yang bagus.\nJika pengguna meminta deskripsi, berikan deskripsi tanpa penjelasan tambahan.\nJika pengguna meminta analisis, jelaskan dengan jelas dan ringkas.`;
+  // Menyisipkan satu baris iklan penuh lebar setelah sebuah video,
+  // mengambil giliran ukuran berikutnya dari ROTATION_POOL.
+  let rotationCounter = 0;
+  function insertAdRow(feed){
+    if(!AD_CONFIG.inContentRotation) return;
+    const wrap = document.createElement('div');
+    wrap.className = 'ad-row';
+    wrap.innerHTML = '<span class="ad-label">Iklan</span>';
+    feed.appendChild(wrap);
 
-  resultEl.textContent = "🤖 Gemini sedang berpikir...";
-
-  try{
-    const response = await fetch(API_URL + "/ask", {
-      method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({project: currentProject, prompt: finalPrompt})
-    });
-    const data = await response.json();
-    if(!data.success) throw new Error(data.error || "Gemini gagal memberikan jawaban.");
-    resultEl.textContent = data.answer || "Gemini tidak memberikan jawaban.";
-  }catch(err){
-    resultEl.textContent = "❌ " + err.message;
+    const ad = ROTATION_POOL[rotationCounter % ROTATION_POOL.length];
+    rotationCounter++;
+    if(ad.type === 'native'){
+      renderNativeAd(wrap, ad);
+    } else {
+      renderBannerAd(wrap, ad);
+    }
   }
-}
 
-function useAIResultAsDescription(){
-  const result = $("aiResult").textContent.trim();
-  if(!result || result.includes("Hasil Gemini akan muncul")){
-    alert("Belum ada hasil Gemini.");
-    return;
+  function extractDriveId(link){
+    const patterns = [
+      /\/d\/([a-zA-Z0-9_-]{10,})/,
+      /[?&]id=([a-zA-Z0-9_-]{10,})/
+    ];
+    for(const p of patterns){
+      const m = link.match(p);
+      if(m) return m[1];
+    }
+    return link.trim();
   }
-  if(selectedAIIndex < 0 || selectedAIIndex >= videos.length){
-    alert("Pilih video terlebih dahulu.");
-    return;
+
+  // Mengubah judul video jadi nama file (contoh: "Bercocok Tanam Part 1"
+  // -> "bercocok-tanam-part-1"). Nama file halaman video individual HARUS
+  // mengikuti pola ini juga.
+  function getCover(video){
+    if(video && video.ogImage) return video.ogImage;
+    if(!video || !video.judul) return "";
+    const slug = slugify(video.judul);
+    return `covers/${slug}.jpg`;
   }
-  videos = videos.slice();
-  videos[selectedAIIndex] = {...videos[selectedAIIndex], deskripsi: result};
-  renderAll();
-  showMsg("Deskripsi dari Gemini dimasukkan ke video (lokal). Tekan Simpan ke GitHub di tab Video Manager untuk menyimpannya.", "warning");
-}
 
-function useAIResultAsTitle(){
-  const result = $("aiResult").textContent.trim();
-  if(!result || result.includes("Hasil Gemini akan muncul")){
-    alert("Belum ada hasil Gemini.");
-    return;
+  function slugify(str){
+    return str.toLowerCase().trim()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)/g, '');
   }
-  if(selectedAIIndex < 0 || selectedAIIndex >= videos.length){
-    alert("Pilih video terlebih dahulu.");
-    return;
+
+  function thumbImgHTML(v){
+    const slug = slugify(v.judul);
+    const candidates = [];
+    const cover = getCover(v);
+    if(cover) candidates.push(cover);
+    candidates.push(`covers/${slug}.jpg`, `covers/${slug}.jpeg`, `covers/${slug}.png`, `covers/${slug}.webp`);
+    const first = candidates.shift();
+    const fallbackAttr = candidates.map(encodeURIComponent).join('|');
+    return `<img class="video-thumb" src="${first || ''}" data-fallback="${fallbackAttr}" onerror="thumbFallback(this)" alt="${v.judul}" loading="lazy">`;
   }
-  videos = videos.slice();
-  videos[selectedAIIndex] = {...videos[selectedAIIndex], judul: result};
-  renderAll();
-  showMsg("Judul dari Gemini dimasukkan ke video (lokal). Tekan Simpan ke GitHub di tab Video Manager untuk menyimpannya.", "warning");
-}
 
-function clearAI(){
-  $("aiPrompt").value = "";
-  $("aiResult").textContent = "Hasil Gemini akan muncul di sini.";
-}
+  function thumbFallback(img){
+    const list = (img.dataset.fallback || '').split('|').filter(Boolean);
+    if(!list.length){ img.onerror = null; return; }
+    const next = decodeURIComponent(list.shift());
+    img.dataset.fallback = list.join('|');
+    img.src = next;
+  }
 
-/* ===================== NAV ===================== */
-document.querySelectorAll(".nav button").forEach(b => b.onclick = () => {
-  document.querySelectorAll(".nav button").forEach(x => x.classList.remove("active"));
-  b.classList.add("active");
-  document.querySelectorAll(".page").forEach(x => x.classList.add("hidden"));
-  $(b.dataset.page).classList.remove("hidden");
-});
+  function renderFeed(VIDEOS){
+    const feed = document.getElementById('feed');
+    feed.innerHTML = '';
 
-/* ===================== PROJECT SWITCHER ===================== */
-$("projectSelect").addEventListener("change", function(){
-  const nextProject = this.value;
-  const diff = computeDiff(savedVideos, videos);
-  if(diffHasChanges(diff)){
-    if(!confirm("Ada perubahan lokal yang belum disimpan ke GitHub. Pindah proyek akan membuang perubahan tersebut. Lanjutkan?")){
-      this.value = currentProject;
+    if(!VIDEOS || !VIDEOS.length){
+      feed.innerHTML = '<div class="empty">Belum ada video.</div>';
       return;
     }
-  }
-  currentProject = nextProject;
-  hideForm();
-  $("diffPanel").classList.add("hidden");
-  $("commitConfirmPanel").classList.add("hidden");
-  pendingCandidate = null;
-  commitLog = [];
-  renderCommitLog();
-  loadVideos();
-});
 
-/* ===================== INITIAL LOAD ===================== */
-currentProject = $("projectSelect").value;
-renderCommitLog();
-loadVideos();
+    // Jumlah kolom grid yang sedang aktif menentukan seberapa sering iklan
+    // muncul: 1 kolom (mobile) -> iklan tiap 1 video, 2 kolom (tablet) ->
+    // tiap 2 video, 4 kolom (desktop) -> tiap 4 video. Dihitung sekali di
+    // awal supaya iklan tidak dimuat sia-sia untuk slot yang disembunyikan.
+    let columnsNow = 4;
+    if(window.innerWidth <= 520) columnsNow = 1;
+    else if(window.innerWidth <= 900) columnsNow = 2;
+
+    VIDEOS.forEach((v, i) => {
+      const episodeNumber = VIDEOS.length - i;
+      const isLatest = i === 0;
+      const driveId = v.driveId;
+
+      const card = document.createElement('div');
+      card.className = 'card' + (isLatest ? ' latest' : '');
+      const pageUrl = slugify(v.judul) + '.html';
+      card.innerHTML = `
+        ${isLatest ? '<span class="badge-baru">BARU</span>' : ''}
+        <a class="video-frame" href="${pageUrl}">
+          ${thumbImgHTML(v)}
+          <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        </a>
+        <div class="card-meta">
+          <span>EP ${String(episodeNumber).padStart(2,'0')}</span>
+          <span>${v.tanggal}</span>
+        </div>
+        <h2 class="card-title"><a href="${pageUrl}" style="color:inherit;text-decoration:none;">${v.judul}</a></h2>
+        ${v.deskripsi ? `<p class="card-desc">${v.deskripsi}</p>` : ''}
+      `;
+      feed.appendChild(card);
+
+      // Iklan disisipkan tiap kali satu baris grid selesai (1 video di
+      // mobile, 2 di tablet, 4 di desktop), sebelum lanjut ke baris/video
+      // berikutnya.
+      if((i + 1) % columnsNow === 0){
+        insertAdRow(feed);
+      }
+    });
+  }
+
+  fetch('videos.json')
+    .then(r => r.json())
+    .then(data => renderFeed(data))
+    .catch(err => {
+      document.getElementById('feed').innerHTML = '<div class="empty">Gagal memuat daftar video. Coba muat ulang halaman.</div>';
+      console.error(err);
+    });
+  if(AD_CONFIG.topBanner){
+    renderBannerAd(document.getElementById('ad-top-728x90'), { key:'cf6aef4585c4817c49bab5e3f1077dc9', width:728, height:90 });
+    renderBannerAd(document.getElementById('ad-top-320x50'), { key:'31ecdbf5858a594406627c7268f204d3', width:320, height:50 });
+  }
 </script>
+
 </body>
 </html>
